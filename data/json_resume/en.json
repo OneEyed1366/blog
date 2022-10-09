@@ -1,0 +1,210 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+  "basics": {
+    "name": "Прокопенко А.И.",
+    "label": "Web/Mobile dev || pseudo:Proger",
+    "image": "/avatar.png",
+    "email": "psevdoproger@gmail.com",
+    "phone": "8 (920) 454-95-07",
+    "summary": "Привет! Я 'гикнутый' на всю голову фанат собак, книжек и технологий. Воспитатель чудесного лабрадора и 2 котов с 9-ти летним стажем. Любопытен до абсурда, инициативен чуть-чуть больше дозволенного",
+    "location": {
+      "region": "Europe",
+      "countryCode": "RU",
+      "city": "Россошь, Воронежская обл., РФ"
+    },
+    "profiles": [
+      {
+        "network": "GitHub",
+        "username": "OneEyed1366",
+        "url": "https://github.com/OneEyed1366"
+      },
+      {
+        "network": "Telegram",
+        "url": "https://t.me/AluCaRD1377"
+      },
+      {
+        "network": "VK",
+        "url": "https://vk.com/psevdoproger"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "Pied Piper",
+      "location": "Palo Alto, CA",
+      "description": "Awesome compression company",
+      "position": "CEO/President",
+      "url": "http://piedpiper.com",
+      "startDate": "2013-12-01",
+      "endDate": "2014-12-01",
+      "summary": "Pied Piper is a multi-platform technology based on a proprietary universal compression algorithm that has consistently fielded high Weisman Scores™ that are not merely competitive, but approach the theoretical limit of lossless compression.",
+      "highlights": [
+        "Build an algorithm for artist to detect if their music was violating copy right infringement laws",
+        "Successfully won Techcrunch Disrupt",
+        "Optimized an algorithm that holds the current world record for Weisman Scores"
+      ]
+    }
+  ],
+  "volunteer": [],
+  "education": [],
+  "awards": [],
+  "publications": [],
+  "skills": [
+    {
+      "name": "Web Dev --- Frontend, ReactJS",
+      "level": "Middle",
+      "keywords": [
+        "HTML",
+        "CSS",
+        "Javascript",
+        "TypeScript",
+        "React",
+        "Redux",
+        "ReduxToolkit",
+        "RTKQuery",
+        "MobX",
+        "Styled Components",
+        "TipTap",
+        "TailwindCSS",
+        "SCSS"
+      ]
+    },
+    {
+      "name": "Web Dev --- Frontend, VueJS",
+      "level": "Middle",
+      "keywords": [
+        "HTML",
+        "CSS",
+        "Javascript",
+        "TypeScript",
+        "Vue2",
+        "Vue3",
+        "Vuex",
+        "Pinia",
+        "Vue-Router",
+        "Vue Meta",
+        "Codemirror",
+        "BootstrapVue",
+        "TailwindCSS",
+        "SCSS"
+      ]
+    },
+    {
+      "name": "Web Dev --- Backend, Django",
+      "level": "Middle",
+      "keywords": [
+        "Python",
+        "Django",
+        "Postgres",
+        "PyTest",
+        "Docker",
+        "Docker Compose",
+        "Django REST Framework",
+        "GraphQL",
+        "Graphene",
+        "PyJWT",
+        "Pydantic",
+        "Jinja2"
+      ]
+    },
+    {
+      "name": "Mobile Dev --- Dart, Flutter",
+      "level": "Junior",
+      "keywords": ["Dart", "Flutter", "MaterialUI", "BLoC", "Highlight"]
+    }
+  ],
+  "languages": [
+    {
+      "language": "Русский",
+      "fluency": "Native speaker"
+    },
+    {
+      "language": "English",
+      "fluency": "B2"
+    },
+    {
+      "language": "Italian",
+      "fluency": "A2"
+    },
+    {
+      "language": "Chineese",
+      "fluency": "A1"
+    }
+  ],
+  "interests": [
+    {
+      "name": "Животные",
+      "keywords": ["Собаки", "Коты", "Дрессировка"]
+    },
+    {
+      "name": "Изучение языков",
+      "keywords": ["Английский", "Итальянский", "Китайский"]
+    },
+    {
+      "name": "Competetive programming",
+      "keywords": ["LeetCode", "CodeWars", "Алгоритмы", "Структуры данных"]
+    },
+    {
+      "name": "Чтение",
+      "keywords": [
+        "Фантастика",
+        "Фэнтэзи",
+        "Приключения",
+        "Computer Science",
+        "Манга"
+      ]
+    },
+    {
+      "name": "Музыка",
+      "keywords": [
+        "Фортепианная музыка",
+        "Гитарная музыка",
+        "Скрипичная (альт) музыка",
+        "Рок",
+        "Тяжелый рок",
+        "Instrumental",
+        "Alt-Rock",
+        "J-Rock"
+      ]
+    },
+    {
+      "name": "Калистеника",
+      "keywords": [
+        "Физические упраженения",
+        "Гимнастика (базовый уровень)",
+        "Отжимания",
+        "Приседания",
+        "Зарядка",
+        "Спорт.Пит"
+      ]
+    }
+  ],
+  "references": [
+    {
+      "name": "М.Давлетшина (Бывшая СЕО 'DriverPack Solutions') - Рекомендация для 'Яндекс.Еда'",
+      "reference": "Много овертаймит, много развивается, живёт вообще разработкой, очень любит решать задачки и рутинные процессы автоматизировать/поддерживать. Супер-усидчивый, даже немного аутичный, когда упарывается в задачку. При этом умеет в соц. взаимодействие и супер-дружелюбный. Живёт в малюсеньком городе, ухаживает за мамой и единственным развлечением считает разработку и обучение разработке. Быстро подхватывает новые технологии. Умеет в скрам, в продуктовую разработку, в брейншторм, немного в архитектуру. Впитывает знания как губка, если есть рядом сильный лид. За три месяца, например, когда мы пересекались на работе, выучил новый фреймворк с нуля и дальше писал на нём со всей командой. А ещё он изначально писал на питоне неплохо и помнит всё. Закрывает дыры всеми сайд-знаниями, если надо."
+    }
+  ],
+  "projects": [
+    {
+      "name": "Miss Direction",
+      "description": "A mapping engine that misguides you",
+      "highlights": [
+        "Won award at AIHacks 2016",
+        "Built by all women team of newbie programmers",
+        "Using modern technologies such as GoogleMaps, Chrome Extension and Javascript"
+      ],
+      "keywords": ["GoogleMaps", "Chrome Extension", "Javascript"],
+      "startDate": "2016-08-24",
+      "endDate": "2016-08-24",
+      "roles": ["Team lead", "Designer"],
+      "entity": "Smoogle",
+      "type": "application"
+    }
+  ],
+  "meta": {
+    "canonical": "https://raw.githubusercontent.com/jsonresume/resume-schema/master/resume.json",
+    "version": "v1.0.0",
+    "lastModified": "2017-12-24T15:53:00"
+  }
+}

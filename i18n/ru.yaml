@@ -1,0 +1,20 @@
+- id: menu-about
+  translation: Немного о блоге
+
+- id: menu-series
+  translation: Циклы статей
+
+- id: menu-cv
+  translation: Обо мне
+
+- id: menu-tags
+  translation: Теги
+
+- id: partials-toc
+  translation: Оглавление
+
+- id: partials-header-search
+  translation: "Поиск постов"
+
+- id: partials-share
+  translation: "Поделится постом: "

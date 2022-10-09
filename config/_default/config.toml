@@ -1,0 +1,102 @@
+copyright = "pseudo:Blog © 2022"
+title = "pseudo:Blog"
+paginate = 10
+enableRobotsTXT = true
+ignoreErrors = ["error-remote-getjson"]
+defaultContentLanguage = 'ru'
+defaultContentLanguageInSubdir = true
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[imaging]
+  quality = 70
+
+[params]
+  themeColor = "purple"
+  # soft medium hard, defaults to medium
+  #themeContrast = "medium"
+  author = "pseudo:Proger"
+
+  [params.logo]
+    text = "pseudo:Blog"
+
+  [params.prism]
+    languages = [
+      "markup",
+      "css",
+      "clike",
+      "javascript",
+      "typescript",
+      "jsx",
+      "tsx",
+      "dart",
+      "python",
+      "bash",
+      "diff",
+      "toml"
+    ]
+    plugins = [
+      "normalize-whitespace",
+      "toolbar",
+      "copy-to-clipboard",
+      "line-numbers",
+      "command-line",
+      "diff-highlight"
+    ]
+
+  [[params.socialShare]]
+    iconSuite = "simple-icon"
+    iconName = "whatsapp"
+    formatString = "whatsapp://send/?text={title}%20{url}"
+  [[params.socialShare]]
+    iconSuite = "simple-icon"
+    iconName = "vk"
+    formatString = "http://vk.com/share.php?url={url}&title={title}&comment={title}"
+  [[params.socialShare]]
+    iconSuite = "simple-icon"
+    iconName = "telegram"
+    formatString = "https://telegram.me/share/url?url={url}&text={title}"
+  [[params.socialShare]]
+    iconSuite = "tabler-icon"
+    iconName = "mail"
+    formatString = "mailto:?subject={title}&body={url}"
+
+[menu]
+  [[menu.main]]
+    identifier = "menu-about"
+    name = 'Немного о блоге'
+    url = '/about'
+    weight = 40
+  [[menu.main]]
+    identifier = "menu-series"
+    name = "Циклы статей"
+    url = "/series"
+    weight = 30
+  [[menu.main]]
+    identifier = "menu-cv"
+    name = 'Обо мне'
+    url = '/cv'
+    weight = 30
+  [[menu.main]]
+    identifier = 'menu-tags'
+    name = 'Теги'
+    url = '/tags'
+    weight = 30
+[languages]
+  [languages.ru]
+    languageName = "Russian"
+    subtitle = "Блог о всяком-разном и особенно - про программирование"
+    description = "Блог про программирование, языки, и всякое разное"
+    weight = 10
+    [languages.ru.params.jsonResume]
+      present = "present"
+  [languages.en]
+    languageName = "English"
+    subtitle = "blog about intresting some interesting stuff, and generally - 'bout PROGRAMMING"
+    description = "Blog about programmung, languages and some other stuff"
+    weight = 10
+    [languages.en.params.jsonResume]
+      present = "present"

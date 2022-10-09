@@ -1,0 +1,20 @@
+- id: menu-about
+  translation: About
+
+- id: menu-series
+  translation: Series
+
+- id: menu-cv
+  translation: CV
+
+- id: menu-tags
+  translation: Tags
+
+- id: partials-toc
+  translation: Table of Contents
+
+- id: partials-header-search
+  translation: "Search"
+
+- id: partials-share
+  translation: "Share this post: "

@@ -1,0 +1,5 @@
+[languages]
+  [languages.ru]
+    baseURL = 'https://pseudo-blog'
+  [languages.en]
+    baseURL = 'https://pseudo-blog/en'
