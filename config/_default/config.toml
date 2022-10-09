@@ -1,4 +1,4 @@
-baseurl = "/"
+baseUrl = "http://localhost:1313"
 languageCode = "ru"
 theme = "terminal"
 paginate = 5
