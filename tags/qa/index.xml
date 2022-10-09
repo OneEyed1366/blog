@@ -37,7 +37,7 @@
 &lt;p>&amp;ldquo;Бонни и Клайд&amp;rdquo; в мире тестирования Web SPA приложений.
 Долго и упорно наступают на пятки &amp;ldquo;мастодонту&amp;rdquo; в лице Jest&amp;rsquo;а.&lt;/p>
 &lt;p>Применяются также для &lt;code>Unit&lt;/code>, &lt;code>Component&lt;/code> &amp;amp; &lt;code>Интеграционного&lt;/code> тестирования.&lt;/p>
-&lt;p>Большой плюс: &lt;em>Интеграционного&lt;/em> тестирование легче масштабируется
+&lt;p>Большой плюс: &lt;em>Интеграционное&lt;/em> тестирование легче масштабируется
 (понятный большинству пример: сравните количество boilerplate&amp;rsquo;а у ванильного
 &lt;a href="https://redux.js.org/">&lt;em>Redux&lt;/em>&lt;/a>
 &amp;amp;
