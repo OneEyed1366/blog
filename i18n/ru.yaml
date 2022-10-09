@@ -11,17 +11,17 @@
 
 - id: reading-time
   translation:
-    one: "{{ . }} минут чтения"
+    one: "{{ . }} минута чтения"
     two: "{{ . }} минуты чтения"
-    few: "{{. }} минут чтения"
+    few: "{{ . }} минуты чтения"
     many: "{{ . }} минут чтения"
     other: "{{ . }} минут чтения"
 
-- id: "config-menu-about"
+- id: "config-menu-about-blog"
   translation: "О блоге"
 
-- id: config-menu-showcase
-  translation: "Проекты"
+- id: "config-menu-about-me"
+  translation: "Обо мне"
 
 - id: config-menu-tags
-  translation: Тэги
+  translation: Список тегов

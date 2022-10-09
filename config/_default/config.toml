@@ -1,4 +1,4 @@
-baseUrl = "http://localhost:1313"
+baseURL = "http://localhost:1313"
 languageCode = "ru"
 theme = "terminal"
 paginate = 5
@@ -44,6 +44,7 @@ defaultContentLanguageInSubdir = true
 
   [params.logo]
     logoText = "pseudo:Blog"
+    logoHomeLink = "posts"
 
   [params.twitter]
     creator = ""
@@ -51,17 +52,17 @@ defaultContentLanguageInSubdir = true
 
 [menu]
   [[menu.main]]
-    identifier = "config-menu-about"
+    identifier = "config-menu-about-blog"
     name = "About"
-    url = "/about"
+    url = "about/blog"
   [[menu.main]]
-    identifier = "config-menu-showcase"
-    name = "Showcase"
-    url = "/projects"
+    identifier = "config-menu-about-me"
+    name = "About"
+    url = "about/me"
   [[menu.main]]
     identifier = "config-menu-tags"
     name = "Тэги"
-    url = "/tags"
+    url = "tags"
 
 [languages]
   [languages.ru]
@@ -78,16 +79,16 @@ defaultContentLanguageInSubdir = true
     missingContentMessage = "Страница не найдена"
     missingBackButtonLabel = "На главную"
 
-  [languages.en]
-    languageName = "English"
-    subtitle = ""
-    owner = "A.Prokopenko"
-    keywords = "programming, blog"
-    copyright = ""
-    menuMore = "Show more"
-    readMore = "Read more"
-    readOtherPosts = "Read other posts"
-    newerPosts = "Newer posts"
-    olderPosts = "Older posts"
-    missingContentMessage = "Page not found..."
-    missingBackButtonLabel = "Back to home page"
+  # [languages.en]
+  #   languageName = "English"
+  #   subtitle = ""
+  #   owner = "A.Prokopenko"
+  #   keywords = "programming, blog"
+  #   copyright = ""
+  #   menuMore = "Show more"
+  #   readMore = "Read more"
+  #   readOtherPosts = "Read other posts"
+  #   newerPosts = "Newer posts"
+  #   olderPosts = "Older posts"
+  #   missingContentMessage = "Page not found..."
+  #   missingBackButtonLabel = "Back to home page"

@@ -1,10 +1,9 @@
 <a href="
   {{ if $.Site.Params.Logo.LogoHomeLink }}
-    {{- $.Site.Params.Logo.LogoHomeLink -}}
+    {{- $.Site.Params.Logo.LogoHomeLink | absLangURL -}}
   {{else}}
     {{- $.Site.BaseURL -}}
   {{ end }}
-  {{- $.Site.Language.Lang -}}
   ">
   <div class="logo">
     {{ with $.Site.Params.Logo.logoText }}
