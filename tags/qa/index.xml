@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>qa on</title><link>https://oneeyed1366.github.io/blog/tags/qa/</link><description>Recent content in qa on</description><generator>Hugo -- gohugo.io</generator><language>ru</language><lastBuildDate>Fri, 07 Oct 2022 18:05:41 +0300</lastBuildDate><atom:link href="https://oneeyed1366.github.io/blog/tags/qa/index.xml" rel="self" type="application/rss+xml"/><item><title>Пару слов про тесты</title><link>https://oneeyed1366.github.io/blog/posts/2022-10-07-thoughts-about-tests/</link><pubDate>Fri, 07 Oct 2022 18:05:41 +0300</pubDate><guid>https://oneeyed1366.github.io/blog/posts/2022-10-07-thoughts-about-tests/</guid><description>Тесты есть? А если найду?? Рано или поздно каждый разраб слышит фразу: &amp;ldquo;Хороший код должен быть покрыт тестами&amp;rdquo;. И вроде бы все логично: чем сложнее приложение, тем сложнее контролировать все его нюансы и взаимосвязи.
-Значит, нужно научить какого-то исполнителя в вакууме тестировать то, что ты (или не ты) написал в своем СУПЕР-МЕГА-ПРИЛОЖЕНИИ-ЗА-ОВЕР-ДОХРЕНА-ДЕНЕГ-В-НАНОСЕКУНДУ!
-Ниже бегло рассмотрим пару-тройку сходу пришедших на ум инструментов (ибо разрабы, будучи людьми &amp;ldquo;прогрессивными&amp;rdquo; &amp;mdash;читать ЛЕНИВЫМИ&amp;mdash; уже придумали довольно много инструментов, которые позволяют эту проблему решить.</description><content>&lt;h2 id="тесты-есть-а-если-найду">Тесты есть? А если найду??&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>qa on</title><link>https://oneeyed1366.github.io/blog/tags/qa/</link><description>Recent content in qa on</description><generator>Hugo -- gohugo.io</generator><language>ru</language><lastBuildDate>Fri, 07 Oct 2022 18:05:41 +0300</lastBuildDate><atom:link href="https://oneeyed1366.github.io/blog/tags/qa/index.xml" rel="self" type="application/rss+xml"/><item><title>По поводу тестирования...</title><link>https://oneeyed1366.github.io/blog/posts/2022-10-07-thoughts-about-tests/</link><pubDate>Fri, 07 Oct 2022 18:05:41 +0300</pubDate><guid>https://oneeyed1366.github.io/blog/posts/2022-10-07-thoughts-about-tests/</guid><description>Тесты есть? А если найду?? Рано или поздно каждый разраб слышит фразу: &amp;ldquo;Хороший код должен быть покрыт тестами&amp;rdquo;. И вроде бы все логично: чем сложнее приложение, тем сложнее контролировать все его нюансы и взаимосвязи.
+Значит, нужно &amp;ldquo;научить&amp;rdquo; какого-то исполнителя в вакууме тестировать то, что ты (или не ты) написал в своем СУПЕР-МЕГА-ПРИЛОЖЕНИИ-ЗА-ОВЕР-ДОХРЕНА-ДЕНЕГ-В-НАНОСЕКУНДУ!
+Ниже бегло рассмотрим пару-тройку сходу пришедших на ум инструментов (ибо разрабы, будучи людьми прогрессивными &amp;mdash;читать _ЛЕНИВЫМИ_&amp;mdash; уже придумали довольно много инструментов, которые позволяют эту проблему решить.</description><content>&lt;h2 id="тесты-есть-а-если-найду">Тесты есть? А если найду??&lt;/h2>
 &lt;p>Рано или поздно каждый разраб слышит фразу: &amp;ldquo;Хороший код должен быть покрыт тестами&amp;rdquo;.
 И вроде бы все логично: чем сложнее приложение, тем сложнее контролировать все его нюансы и взаимосвязи.&lt;/p>
-&lt;p>Значит, нужно &lt;code>научить&lt;/code> какого-то исполнителя в вакууме тестировать то, что ты (или не ты)
+&lt;p>Значит, нужно &amp;ldquo;научить&amp;rdquo; какого-то исполнителя в вакууме тестировать то, что ты (или не ты)
 написал в своем СУПЕР-МЕГА-ПРИЛОЖЕНИИ-ЗА-ОВЕР-ДОХРЕНА-ДЕНЕГ-В-НАНОСЕКУНДУ!&lt;/p>
 &lt;p>Ниже бегло рассмотрим пару-тройку сходу пришедших на ум инструментов
-(ибо разрабы, будучи людьми &amp;ldquo;прогрессивными&amp;rdquo; &amp;mdash;читать &lt;em>ЛЕНИВЫМИ&lt;/em>&amp;mdash; уже придумали довольно
+(ибо разрабы, будучи людьми &lt;code>прогрессивными&lt;/code> &amp;mdash;читать &lt;code>_ЛЕНИВЫМИ_&lt;/code>&amp;mdash; уже придумали довольно
 много инструментов, которые позволяют эту проблему решить.)&lt;/p>
 &lt;h3 id="список-костылей-карл-кос-ты-лей-инструментов-навскидку">Список (&lt;strong>Костылей, Карл. КОС-ТЫ-ЛЕЙ&lt;/strong>) инструментов, навскидку&lt;/h3>
 &lt;h4 id="jesthttpsjestjsio">&lt;a href="https://jestjs.io/">Jest&lt;/a>&lt;/h4>
 &lt;p>Являясь одним из самых популярных инструментов для тестирования, негласно считается
 &amp;ldquo;королем&amp;rdquo; среди Enterprise-приложений (но это не точно)
-Применяется как для &lt;em>Unit&lt;/em>, так и для &lt;em>Component&lt;/em> тестирования.
-Можно применять и для &lt;em>Integration&lt;/em> тестирования, но там уже немножко больно&lt;/p>
+Применяется как для &lt;code>Unit&lt;/code>, так и для &lt;code>Component&lt;/code> тестирования.
+Можно применять и для &lt;code>Интеграционного&lt;/code> тестирования, но там уже &lt;code>немножко больно&lt;/code>&lt;/p>
 &lt;p>(
 Ловит въетнамские флэшбэки и вспоминает проекты, которые делали &lt;em>E2E&lt;/em> тесты на Jest&amp;rsquo;e&amp;hellip;
 &lt;strong>Автор ушел пить кофе и рефлексировать, что раньше код был чище, а трава &amp;ndash; зеленей&lt;/strong>
@@ -36,8 +36,8 @@
 &lt;h4 id="mochahttpsmochajsorg--chaihttpswwwchaijscom">&lt;a href="https://mochajs.org/">Mocha&lt;/a> + &lt;a href="https://www.chaijs.com/">Chai&lt;/a>&lt;/h4>
 &lt;p>&amp;ldquo;Бонни и Клайд&amp;rdquo; в мире тестирования Web SPA приложений.
 Долго и упорно наступают на пятки &amp;ldquo;мастодонту&amp;rdquo; в лице Jest&amp;rsquo;а.&lt;/p>
-&lt;p>Применяются также для &lt;em>Unit&lt;/em>, &lt;em>Component&lt;/em> &amp;amp; &lt;em>Integration&lt;/em> тестирования.&lt;/p>
-&lt;p>Большой плюс: &lt;em>Integration&lt;/em> тестирование легче масштабируется
+&lt;p>Применяются также для &lt;code>Unit&lt;/code>, &lt;code>Component&lt;/code> &amp;amp; &lt;code>Интеграционного&lt;/code> тестирования.&lt;/p>
+&lt;p>Большой плюс: &lt;em>Интеграционного&lt;/em> тестирование легче масштабируется
 (понятный большинству пример: сравните количество boilerplate&amp;rsquo;а у ванильного
 &lt;a href="https://redux.js.org/">&lt;em>Redux&lt;/em>&lt;/a>
 &amp;amp;
@@ -56,7 +56,7 @@
 (
 когда его в 100500 раз вызовут на ковер с целью объяснить,
 нахрена вы потратили 2 спринта &amp;ldquo;на увеличение отказоустойчивости приложения&amp;rdquo;,
-если пришел очередной &lt;code>chaotic-джун&lt;/code> и уронил production
+если пришел очередной &amp;ldquo;chaotic-джун&amp;rdquo; и уронил production
 )&lt;/li>
 &lt;/ul>
 &lt;p>Минусы:&lt;/p>
@@ -78,7 +78,7 @@
 мир QA немножко удобства и магии (&amp;ldquo;Плюсовики&amp;rdquo; дружно сделали страшную морду).&lt;/li>
 &lt;li>Почти безупречно подходит для большинства DEV QA сценариев
 (у матерых QA&amp;rsquo;щиков уже свой, потом и кровью выстраданный набор &amp;ldquo;костылей&amp;rdquo;),
-часто используется для &lt;em>Component&lt;/em>, &lt;em>Integration&lt;/em> &amp;amp; &lt;em>E2E&lt;/em> тестирования.&lt;/li>
+часто используется для &lt;code>Component&lt;/code>, &lt;code>Интеграционного&lt;/code> &amp;amp; &lt;code>E2E&lt;/code> тестирования.&lt;/li>
 &lt;li>Из коробки (с какой-то бородатой версии) дает тебе красивый и, что важнее,
 ТЫКАТЕЛЬНЫЙ UI, которым просто пользоваться.&lt;/li>
 &lt;li>Если ты (как и я) странный человек, который использует форки Chromium&amp;rsquo;а,
@@ -87,7 +87,7 @@
 &lt;/ul>
 &lt;p>Минусы:&lt;/p>
 &lt;ul>
-&lt;li>Тяжелый, перед первым запуском, по сути, требует установки отдельного Cypress приложения&lt;/li>
+&lt;li>Тяжелый, перед первым запуском, по сути, &lt;code>требует установки отдельного Cypress приложения&lt;/code>&lt;/li>
 &lt;li>Тяжело вливается в &lt;em>Unit&lt;/em> тестирование (хотя может)&lt;/li>
 &lt;li>В зависимости от framework&amp;rsquo;а, при &lt;em>Component&lt;/em> тестироовании можно не раз (и нифига не два)
 стабильно стрелять себе в колено. Не из дробовика, но все же&lt;/li>
@@ -130,7 +130,7 @@ Scrum, Agile, и вот эту вот всю &amp;ldquo;движуху&amp;rdquo
 &lt;ul>
 &lt;li>Тесты замедляют &amp;ldquo;ржавение&amp;rdquo; кода&lt;/li>
 &lt;li>Тесты тестируют то, что НАДО тестировать&lt;/li>
-&lt;li>Тесты частично снимают с условного Лида задачу по постоянному надзору за &lt;code>chaotic-джунами&lt;/code>&lt;/li>
+&lt;li>Тесты частично снимают с условного Лида задачу по постоянному надзору за &amp;ldquo;chaotic-джунами&amp;rdquo;&lt;/li>
 &lt;li>Тесты (с некоторыми ограничениями) выполняют функцию Доки по проекту (для разрабов!)&lt;/li>
 &lt;li>Тесты с определенным процентом успеха не пускают кривой код в production (ВНЕЗАПНО №2)&lt;/li>
 &lt;/ul>
@@ -150,7 +150,7 @@ Scrum, Agile, и вот эту вот всю &amp;ldquo;движуху&amp;rdquo
 (в редких случаях - силами qa-team),
 ведь &amp;ldquo;вы же сами это написали, и вы говорите, что не можете предугадать, как поведет себя продукт?
 Я начинаю сомневаться в вашей компетентности&amp;rdquo; (и еще 1000 классных фраз от новоявленного CEO, CTO, whatever&amp;hellip;)&lt;/p>
-&lt;h3 id="а-потом---суп-с-котом-шта">А потом - суп с котом (ШТА???)&lt;/h3>
+&lt;h3 id="а-потом---суп-с-котом-0_o-">А потом - суп с котом (0_o ?!)&lt;/h3>
 &lt;p>Ладно-ладно, хватит кидаться тапками.
 Торжественно клянусь, (&lt;em>что замышляю только шалость&lt;/em>)
 что ни одна животинка в ходе написания данного поста не пострадала.
