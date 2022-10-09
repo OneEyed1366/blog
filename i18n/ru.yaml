@@ -1,0 +1,16 @@
+- id: toc
+  translation: Оглавление
+
+- id: reading-time
+  translation:
+    one: минута чтения ({{ .WordCount }} cлов)
+    other: минут чтения ({{ .WordCount }} cлов)
+
+- id: "config-menu-about"
+  translation: "О блоге"
+
+- id: config-menu-showcase
+  translation: "Проекты"
+
+- id: config-menu-tags
+  translation: Тэги

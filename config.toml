@@ -1,3 +1,93 @@
-baseURL = 'http://example.org/'
-languageCode = 'en-us'
-title = 'My New Hugo Site'
+baseurl = "/"
+languageCode = "ru"
+theme = "terminal"
+paginate = 5
+defaultContentLanguage = "ru"
+defaultContentLanguageInSubdir = true
+
+[params]
+  contentTypeName = "posts"
+  # ["orange", "blue", "red", "green", "pink"]
+  themeColor = "blue"
+  # if you set this to 0, only submenu trigger will be visible
+  showMenuItems = 2
+  # show selector to switch language
+  showLanguageSelector = true
+  # set theme to full screen width
+  fullWidthTheme = false
+  # center theme with default width
+  centerTheme = false
+  # if your resource directory contains an image called `cover.(jpg|png|webp)`,
+  # then the file will be used as a cover automatically.
+  # With this option you don't have to put the `cover` param in a front-matter.
+  autoCover = true
+  # set post to show the last updated
+  # If you use git, you can set `enableGitInfo` to `true` and then post will automatically get the last updated
+  showLastUpdated = false
+  # set a custom favicon (default is a `themeColor` square)
+  # favicon = "favicon.ico"
+  # Provide a string as a prefix for the last update date. By default, it looks like this: 2020-xx-xx [Updated: 2020-xx-xx] :: Author
+  # updatedDatePrefix = "Updated"
+
+  # set all headings to their default size (depending on browser settings)
+  # oneHeadingSize = true # default
+
+  # whether to show a page's estimated reading time
+  readingTime = true # default
+
+  Toc = true # default
+
+  # set title for the table of contents
+  # can be overridden in a page's front-matter
+  # TocTitle = "Table of Contents" # default
+
+
+  [params.logo]
+    logoText = "pseudo:Blog"
+
+  [params.twitter]
+    creator = ""
+    site = ""
+
+[menu]
+  [[menu.main]]
+    identifier = "config-menu-about"
+    name = "About"
+    url = "/about"
+  [[menu.main]]
+    identifier = "config-menu-showcase"
+    name = "Showcase"
+    url = "/projects"
+  [[menu.main]]
+    identifier = "config-menu-tags"
+    name = "Тэги"
+    url = "/tags"
+
+[languages]
+  [languages.ru]
+    languageName = "Русский"
+    subtitle = ""
+    owner = "Прокопенко А.И."
+    keywords = "программирование, блоги"
+    copyright = ""
+    menuMore = "Раскрыть меню"
+    readMore = "Продолжить чтение"
+    readOtherPosts = "Читать другие посты"
+    newerPosts = "Новые посты"
+    olderPosts = "Предудыщие посты"
+    missingContentMessage = "Страница не найдена"
+    missingBackButtonLabel = "На главную"
+
+  [languages.en]
+    languageName = "English"
+    subtitle = ""
+    owner = "A.Prokopenko"
+    keywords = "programming, blog"
+    copyright = ""
+    menuMore = "Show more"
+    readMore = "Read more"
+    readOtherPosts = "Read other posts"
+    newerPosts = "Newer posts"
+    olderPosts = "Older posts"
+    missingContentMessage = "Page not found..."
+    missingBackButtonLabel = "Back to home page"

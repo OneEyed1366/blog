@@ -1,0 +1,14 @@
+- id: toc
+  translation: Table of Contents
+
+- id: reading-time
+  translation: min reading time ({{ .WordCount }} words)
+
+- id: "config-menu-about"
+  translation: "О блоге"
+
+- id: config-menu-showcase
+  translation: "Проекты"
+
+- id: config-menu-tags
+  translation: Tags
