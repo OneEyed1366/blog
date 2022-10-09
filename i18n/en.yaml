@@ -9,11 +9,11 @@
 - id: reading-time
   translation: "{{ . }} min reading time"
 
-- id: "config-menu-about"
-  translation: "О блоге"
+- id: "config-menu-about-blog"
+  translation: "About blog"
 
-- id: config-menu-showcase
-  translation: "Проекты"
+- id: "config-menu-about-me"
+  translation: "Me"
 
 - id: config-menu-tags
   translation: Tags
