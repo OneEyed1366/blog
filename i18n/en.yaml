@@ -1,8 +1,13 @@
 - id: toc
   translation: Table of Contents
 
+- id: reading-time-words
+  translation:
+    one: ({{ . }} word)
+    other: ({{ . }} words)
+
 - id: reading-time
-  translation: min reading time ({{ .WordCount }} words)
+  translation: "{{ . }} min reading time"
 
 - id: "config-menu-about"
   translation: "О блоге"

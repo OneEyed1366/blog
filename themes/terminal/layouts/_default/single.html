@@ -16,7 +16,7 @@
     {{ end }}
     {{ if and (.Param "readingTime") (eq (.Param "readingTime") true) }}
       <span class="post-reading-time">
-      :: ~{{ .ReadingTime }} {{ i18n "reading-time" . }}
+      :: ~{{ i18n "reading-time" .ReadingTime }} {{ i18n "reading-time-words" .WordCount }}
       </span>
     {{ end }}
   </div>

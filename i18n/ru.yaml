@@ -1,10 +1,21 @@
 - id: toc
   translation: Оглавление
 
+- id: reading-time-words
+  translation:
+    one: ({{ . }} cлово)
+    two: ({{ . }} слова)
+    few: ({{ . }} слова)
+    many: ({{ . }} слов)
+    other: ({{ . }} слов)
+
 - id: reading-time
   translation:
-    one: минута чтения ({{ .WordCount }} cлов)
-    other: минут чтения ({{ .WordCount }} cлов)
+    one: "{{ . }} минут чтения"
+    two: "{{ . }} минуты чтения"
+    few: "{{. }} минут чтения"
+    many: "{{ . }} минут чтения"
+    other: "{{ . }} минут чтения"
 
 - id: "config-menu-about"
   translation: "О блоге"
