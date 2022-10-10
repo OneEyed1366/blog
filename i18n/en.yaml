@@ -1,3 +1,6 @@
+- id: header-mobile-menu
+  translation: menu
+
 - id: toc
   translation: Table of Contents
 
