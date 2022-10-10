@@ -7,6 +7,7 @@ keywords = ["cats", "life"]
 showFullContent = false
 readingTime = true 
 hideComments = true 
+draft = true
 +++
 
 ## Это не я! Он сам пришел! (Мяв)
