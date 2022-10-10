@@ -5,12 +5,8 @@ slug: "2022-10-07-thoughts-about-tests"
 date: "2022-10-07T18:05:41+03:00"
 draft: false
 comments: false
-socialShare: true
 toc: true
-series: ["thoughts", "web"]
 tags: ["frontend", "qa", "JavaScript"]
-# cover:
-#   src: ./cover.jpeg
 ---
 
 ## Тесты есть? А если найду??
