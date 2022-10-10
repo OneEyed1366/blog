@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>web on</title><link>https://oneeyed1366.github.io/blog/tags/web/</link><description>Recent content in web on</description><generator>Hugo -- gohugo.io</generator><language>ru</language><lastBuildDate>Mon, 10 Oct 2022 08:52:39 +0300</lastBuildDate><atom:link href="https://oneeyed1366.github.io/blog/tags/web/index.xml" rel="self" type="application/rss+xml"/><item><title>Мозги на прокачку: безопасники, XSS и при чем тут формочки</title><link>https://oneeyed1366.github.io/blog/posts/2022-10-10-js-interviews-1/</link><pubDate>Mon, 10 Oct 2022 08:52:39 +0300</pubDate><guid>https://oneeyed1366.github.io/blog/posts/2022-10-10-js-interviews-1/</guid><description>Что? XSS - это термин, описывающий вредоносный скриптинг на сайте путем внедрения JavaScript кода в тех частях пользовательского интерфейса, которые предварительно не проверяются разработчиком
+Как? Это возможно из-за особенностей работы JS движков внутри браузера.
+Если точнее, то движок, по сути, парсит скрипты из обычного текста, а значит - ему до фонаря, откуда этот скрипт появился.
+А поточнее? Идея заключается в том, чтобы обходными путями добавить в приложение код, который изначально не был предусмотрен разработчиками.</description><content>&lt;h2 id="что">Что?&lt;/h2>
+&lt;blockquote>
+&lt;p>&lt;code>XSS&lt;/code> - это термин, описывающий вредоносный скриптинг на сайте
+путем &lt;code>внедрения JavaScript&lt;/code> кода в тех частях пользовательского интерфейса,
+которые предварительно &lt;code>не проверяются разработчиком&lt;/code>&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="как">Как?&lt;/h2>
+&lt;p>Это &lt;code>возможно из-за особенностей работы JS движков внутри браузера&lt;/code>.&lt;/p>
+&lt;p>Если точнее, то &lt;code>движок&lt;/code>, по сути, &lt;code>парсит скрипты из обычного текста&lt;/code>, а значит -
+ему до фонаря, откуда этот скрипт появился.&lt;/p>
+&lt;h2 id="а-поточнее">А поточнее?&lt;/h2>
+&lt;p>Идея заключается в том, чтобы обходными путями добавить в приложение код,
+который изначально не был предусмотрен разработчиками.&lt;/p>
+&lt;h3 id="допустим-через-_ссылки_">Допустим, через &lt;em>ссылки&lt;/em>&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-jsx" data-lang="jsx">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">unsecuredInputId&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;unsecured-input_id&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">/** @type {[string, (data: string) =&amp;gt; void]} */&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> [&lt;span style="color:#a6e22e">state&lt;/span>, &lt;span style="color:#a6e22e">setState&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">useState&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">onInputChange&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">el&lt;/span> =&amp;gt; {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">setState&lt;/span>(&lt;span style="color:#a6e22e">el&lt;/span>.&lt;span style="color:#a6e22e">target&lt;/span>.&lt;span style="color:#a6e22e">value&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">return&lt;/span> (
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">className&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;someClassName&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">label&lt;/span> &lt;span style="color:#a6e22e">htmlFor&lt;/span>&lt;span style="color:#f92672">=&lt;/span>{&lt;span style="color:#a6e22e">unsecuredInputId&lt;/span>}&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">input&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>{&lt;span style="color:#a6e22e">unsecuredInputId&lt;/span>} /&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">label&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">a&lt;/span> &lt;span style="color:#a6e22e">href&lt;/span>&lt;span style="color:#f92672">=&lt;/span>{&lt;span style="color:#a6e22e">state&lt;/span>} &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;socialMediaLink&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Social&lt;/span> &lt;span style="color:#a6e22e">Media&lt;/span> &lt;span style="color:#a6e22e">Link&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">a&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="и-шо-ж-в-этом-плохого">И шо-ж в этом плохого??&lt;/h4>
+&lt;p>Допустим, &lt;code>кулХацкер&lt;/code> введёт в радостно отрисованный ему input вот такую конструкцию
+(&amp;ldquo;Cовершенно случайно&amp;rdquo;)&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">javascript&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">alert&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Hello, Hacker World!&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>В таком случае, после ввода данных может оказаться неприятная ситуация:&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>кулХацкер&lt;/code> создал профиль с вот такой ссылкой (например, якобы на аккаунт ВК)&lt;/li>
+&lt;li>&lt;code>Невинный пользователь&lt;/code>, который хочет в личном письме высказать кулХацкеру, где он не прав,
+ничего не подозревая тыкает, докустим, на иконку, дабы перейти по ссылке&lt;/li>
+&lt;li>Вместо заветной странички обидчика, недоумевающий пользователь &lt;code>видит alert&lt;/code>
+с сообщением &amp;ldquo;Hello, Hacker World&amp;rdquo;.&lt;/li>
+&lt;/ol>
+&lt;p>Готово, вы великолепны (и, собсна, уволены)&lt;/p>
+&lt;h3 id="допустим-через-_dangerouslysetinnerhtml_">Допустим, через &lt;em>dangerouslySetInnerHTML&lt;/em>&lt;/h3>
+&lt;h4 id="оффтоп">Оффтоп&lt;/h4>
+&lt;p>Видел в паре проектов выставление иконок таким способом, особеннно -
+если они получались откуда-то с сервера, и потом парсились в текст.&lt;/p>
+&lt;p>Если &lt;code>Вы&lt;/code> с таким &lt;code>не сталкивались&lt;/code> - &lt;code>круто&lt;/code>, вам повезло.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-jsx" data-lang="jsx">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">/** @type {[string, (data: string) =&amp;gt; void]} */&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> [&lt;span style="color:#a6e22e">innerHtml&lt;/span>, &lt;span style="color:#a6e22e">setInnerHtml&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">useState&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">onGetSvgFromApi&lt;/span> &lt;span style="color:#f92672">=&lt;/span> () =&amp;gt; {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">axios&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">process&lt;/span>.&lt;span style="color:#a6e22e">env&lt;/span>.&lt;span style="color:#a6e22e">REACT_APP_API_URL&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#e6db74">&amp;#34;/some-endpoint&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">then&lt;/span>(({ &lt;span style="color:#a6e22e">data&lt;/span> }) =&amp;gt; {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">setInnerHtml&lt;/span>(&lt;span style="color:#a6e22e">data&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> })
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#66d9ef">catch&lt;/span>(&lt;span style="color:#a6e22e">error&lt;/span> =&amp;gt; {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">error&lt;/span>(&lt;span style="color:#a6e22e">error&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> });
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">return&lt;/span> (
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">className&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;someClassName&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">button&lt;/span> &lt;span style="color:#a6e22e">type&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;button&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">onClick&lt;/span>&lt;span style="color:#f92672">=&lt;/span>{&lt;span style="color:#a6e22e">onGetSvgFromApi&lt;/span>}&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Получить&lt;/span> &lt;span style="color:#a6e22e">SVG&lt;/span>&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#a6e22e">иконку&lt;/span> &lt;span style="color:#a6e22e">с&lt;/span> &lt;span style="color:#a6e22e">сервера&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">button&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;some-social-media-container&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">dangerouslySetInnerHTML&lt;/span>&lt;span style="color:#f92672">=&lt;/span>{{ &lt;span style="color:#a6e22e">__html&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">innerHtml&lt;/span> }}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> /&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="и-шо-ж-в-этом-плохого-1">И шо-ж в этом плохого??&lt;/h4>
+&lt;p>Допустим, &lt;code>кулХацкер №2&lt;/code> (поскольку у вас &lt;code>нет SSL сертификата&lt;/code>) как &lt;code>man-in-the-middle&lt;/code>
+перехватил данные, которые летят с вашего сервака, и теперь &lt;code>шлёт&lt;/code> в ответе
+&lt;code>не SVG'шку&lt;/code>, а&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-html" data-lang="html">&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">alert&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Hello, Hacker World!&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>При таком раскладе, поскольку вы &lt;code>используете dangerouslySetInnerHTML&lt;/code>,
+то браузер превратит этот ответ в элемент DOM-дерева, а значит - Пам-Пам.&lt;/p>
+&lt;p>Да-да, все верно. &lt;code>JavaScript движок&lt;/code>, увидя не обработанный скрипт,
+&lt;code>со спокойной браузерной душой выполнит все&lt;/code>, что отправил ему &lt;code>кулХацкер №2&lt;/code>&lt;/p>
+&lt;p>Итог? Вы очешуенны (и снова уволены)&lt;/p>
+&lt;h2 id="вредные-советы">Вредные советы&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>Никогда не &lt;code>ВАЛИДИРУЙТЕ&lt;/code> то, &lt;code>ЧТО ВВОДИТ ПОЛЬЗОВАТЕЛЬ&lt;/code>. Серьезно,
+нафига тратить время на такую глупую штуку, когда можно по****ить
+на себя в зеркале?&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Никогда не &lt;code>УСТАНАВЛИВАЙТЕ SSL-СЕРТИФИКАТ&lt;/code>, ибо нафига - у вас же User
+никогда ничего в Web-Приложухе не делает. Так зачем заморачиваться??&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Никогда не &lt;code>СЛЕДИТЕ ЗА dangerouslySetInnerHTML&lt;/code>, ибо - нафига?
+Все работает-же, значит можно заняться более важными делами (например из &lt;code>ПУНКТА №1&lt;/code>)&lt;/p>
+&lt;/li>
+&lt;/ol></content></item></channel></rss>
