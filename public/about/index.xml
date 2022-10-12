@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Abouts on </title>
+    <link>https://oneeyed1366.github.io/blog/about/</link>
+    <description>Recent content in Abouts on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ru</language><atom:link href="https://oneeyed1366.github.io/blog/about/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Кто такой &#39;pseudo::Blogger&#39;?</title>
+      <link>https://oneeyed1366.github.io/blog/about/me/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://oneeyed1366.github.io/blog/about/me/</guid>
+      <description>Как личность? Я &amp;ldquo;гикнутый&amp;rdquo; на всю голову фанат собак, книжек и технологий, а также воспитатель чудесного лабрадора и 2 котов с 9-ти летним стажем.
+Люблю языки, в частности Итальянский. В свободное время стараюсь не забывать Английский, а также потихоньку изучать Китайский.
+Занимался музыкой, в своё время неплохо так прокачал скилл пианиста. Пытался в скрипку, но увы - вообще не мое. Зато пошла гитара.
+Как работяга? Я Формошлёп 50 уровня, работаю на TS, React\Vue и в качестве хобби потихоньку изучаю кросс-платформенную разработку на React Native/Dart - Flutter.</description>
+      <content>&lt;h2 id=&#34;как-личность&#34;&gt;Как личность?&lt;/h2&gt;
+&lt;p&gt;Я &amp;ldquo;гикнутый&amp;rdquo; на всю голову фанат собак, книжек и технологий, а также
+воспитатель чудесного лабрадора и 2 котов с 9-ти летним стажем.&lt;/p&gt;
+&lt;p&gt;Люблю языки, в частности &lt;code&gt;Итальянский&lt;/code&gt;. В свободное время
+стараюсь не забывать &lt;code&gt;Английский&lt;/code&gt;, а также потихоньку изучать &lt;code&gt;Китайский&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Занимался музыкой, в своё время неплохо так прокачал скилл &lt;code&gt;пианиста&lt;/code&gt;. Пытался
+в &lt;code&gt;скрипку&lt;/code&gt;, но увы - вообще не мое. Зато пошла &lt;code&gt;гитара&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;как-работяга&#34;&gt;Как работяга?&lt;/h2&gt;
+&lt;p&gt;Я &lt;code&gt;Формошлёп 50 уровня&lt;/code&gt;, работаю на &lt;code&gt;TS, React\Vue&lt;/code&gt; и в качестве хобби
+потихоньку изучаю кросс-платформенную разработку на &lt;code&gt;React Native&lt;/code&gt;/&lt;code&gt;Dart - Flutter&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Начинал как &lt;code&gt;Backend&#39;ер&lt;/code&gt; на &lt;code&gt;Python, Django&lt;/code&gt;, но потом, что называется, &amp;ldquo;перемкнуло&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Работаю преимущественно как &lt;code&gt;Аутсорсер&lt;/code&gt;, но начинал в такой древней штуке как
+&lt;code&gt;Web Студия&lt;/code&gt;
+(в те бородатые времена, когда помимо кодерства надо было и на &amp;ldquo;нормальной&amp;rdquo; работе работать)&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>Что за &#39;pseudo::Blog&#39; вообще?</title>
+      <link>https://oneeyed1366.github.io/blog/about/blog/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://oneeyed1366.github.io/blog/about/blog/</guid>
+      <description>Что? По сути, данный блог - это просто &amp;ldquo;сборная солянка&amp;rdquo; впечатлений и опыта 1 человека, который он ведет больше даже для себя, чем для остальных
+(Эгоизм 80 уровня &amp;ndash; ACTIVATED)
+Чтобы что? Цель данного блога - сохранить знания и мысли, которые покажутся мне важными.
+У данного блога НЕТ ЦЕЛЕЙ &amp;ldquo;убить дракона&amp;rdquo; (кидает камень в Reddit), &amp;ldquo;спасти принцессу&amp;rdquo; (Аудитория - привет!) или &amp;ldquo;жить долго и счастливо&amp;rdquo; (ибо скучно, и как в известном меме: I don&amp;rsquo;t wanna peace.</description>
+      <content>&lt;h2 id=&#34;что&#34;&gt;Что?&lt;/h2&gt;
+&lt;p&gt;По сути, данный блог - это просто &amp;ldquo;сборная солянка&amp;rdquo; впечатлений и опыта
+1 человека, который он ведет больше даже для себя, чем для остальных&lt;/p&gt;
+&lt;p&gt;(Эгоизм 80 уровня &amp;ndash; ACTIVATED)&lt;/p&gt;
+&lt;h2 id=&#34;чтобы-что&#34;&gt;Чтобы что?&lt;/h2&gt;
+&lt;p&gt;Цель данного блога - сохранить знания и мысли, которые покажутся мне важными.&lt;/p&gt;
+&lt;p&gt;У данного блога &lt;strong&gt;НЕТ ЦЕЛЕЙ&lt;/strong&gt; &amp;ldquo;убить дракона&amp;rdquo; (кидает камень в Reddit),
+&amp;ldquo;спасти принцессу&amp;rdquo; (Аудитория - привет!) или &amp;ldquo;жить долго и счастливо&amp;rdquo;
+(ибо скучно, и как в известном меме: I don&amp;rsquo;t wanna peace. I WANT PROBLEMS, ALWAYS!)&lt;/p&gt;
+&lt;h2 id=&#34;как-я-к-этому-пришел&#34;&gt;Как я к этому пришел?&lt;/h2&gt;
+&lt;p&gt;На самом деле, мне часто говорили во время работы, что я интересно пишу.&lt;/p&gt;
+&lt;p&gt;В смысле, большинство &amp;ldquo;скучных&amp;rdquo;, &amp;ldquo;технических&amp;rdquo; и около-кодерских тем я, со слов других,
+с определенным процентом успеха писал так,
+что понятно и интересно читать было как
+тестировщикам\менеджерам\подставь-сюда-шото-как-бы-умное-плиз,
+так и самим кодерам.&lt;/p&gt;
+&lt;p&gt;Поэтому, периодически у меня &amp;ldquo;простреливала&amp;rdquo; в моем ушатанном в ноль мозгу мысль:&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;А может как-бы какой-то бы типа бложек завести? Ну там, картиночки, постики, вся фигня???&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;Так я и докатился до такой жизни. Утром - треню, днем - работаю,
+вечером - притворяюсь хорошим человеком и добрым другом четвероногих
+(спойлер: получается фигово), а перед сном &amp;ldquo;ваяю свои произведения&amp;rdquo;.&lt;/p&gt;
+&lt;h2 id=&#34;что-хочу-в-итоге-получить&#34;&gt;Что хочу в итоге получить?&lt;/h2&gt;
+&lt;p&gt;Тони Старка и Черную Вдову на ДР. Я не шучу. ;)&lt;/p&gt;
+&lt;p&gt;А если серьезно - просто писать, и чтобы создаваемые здесь посты были
+в той или иной степени полезны другим людям.&lt;/p&gt;
+&lt;p&gt;Неважно: &amp;ldquo;ВАйТишник&amp;rdquo; вы, Senior с 100+ годами опыта во всех языках мира - по**ю вообще.&lt;/p&gt;
+&lt;p&gt;Если для вас будет забавно в какой-то момент времени почитать излагаемый тут материал
+или (не дай Бог!) вы сочтетё его полезным - тогда круто, плюсик мне в карму.&lt;/p&gt;
+</content>
+    </item>
+    
+  </channel>
+</rss>
