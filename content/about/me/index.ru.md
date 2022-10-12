@@ -1,5 +1,5 @@
 ---
-title: Кто такой 'pseudo:Blogger'?
+title: Кто такой 'pseudo::Blogger'?
 toc: false
 ---
 
