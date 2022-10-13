@@ -25,33 +25,29 @@ draft = true
 
 ## Про что поговорим?
 
-Про `оптимизацию` и `профилирование компонентов`
-{{< del >}}и немножко о react'овском геморрое{{< /del >}}
+Про `ЁПТИМИЗАЦИЮ`
+(автор хотел, правда хотел написать правильно, но не сдержался)
 
-### Про оптимизацию
+## Шта? 'ЁПТИМИЗАЦИЯ'???? 0_o
 
-`Одна из` главных `"фишек" React'а` по сравнению с _Angular_ & _Vue_,
+Ага, именно так, и именно через "ё", ибо хоть
+`одна из` главных `"фишек" React'а` по сравнению с _Angular_ & _Vue_,
 `это возможность` достаточно `тонко управлять процессом рендеринга`
-UI в Web-Приложении
-(клеит на React ярлычок "Fedora", Vue - "MacOSX Mountain Lion",
+UI в Web-Приложении, но по опыту выходит примерно вот как:
+
+Покуда не "съел на этом собаку", можно не раз и ДАЛЕКО не два выстрелить себе
+в колено
+{{< del >}}
+хотя не, о чём это я.
+Тут жеж все "тру-JS-developer'ы", а не "framework'щики" какие-то, как я (плачет)
+{{< /del >}}
+
+---
+
+(Подумав, клеит на React ярлычок "Fedora", на Vue - "MacOSX Mountain Lion",
 а на Angular - "Windows 10 for Business")
 
-Если точнее, то я сейчас говорю про то, `как React понимает`,
-`что` ему `пора работать и как` мы можем `этим` процессом `управлять`.
-
-{{< del >}}А не балду гонять, ваяя постики в блоге{{< /del >}}
-
-#### И-и-и???
-
-На самом деле, React проповедует достаточно простую, но эффективную идеологию
-`однонаправленного потока данных`
-{{< del >}} о как звучит! Да-да, совсем накрыло{{< /del >}}
-
-Обычно о ней говорят в контексте работы с реактивностью, но свою "лепту" в
-отрисовку компонентов это тоже привносит
-(И, забегая вперед, не всегда очевидную, но прям существенную).
-
-#### Спектакль в 2 действиях
+## Спектакль в 2 действиях
 
 Давайте представим, что бизнес врывается с ноги в dev-team чат, и такой:
 
@@ -67,7 +63,7 @@ UI в Web-Приложении
 - (Б) ОК! Завтра, в течение дня!
 - (Л) Ок.
 
-_Бизнес уходит, просыпается dev-team_
+_Бизнес уходит, просыпается "мафиозный" dev-team_
 
 - (Л) Народ, вангую, что нас припашут ваять аналог AgGrid, но чисто свой,
   и чтобы с плюшками.
@@ -90,9 +86,9 @@ _Бизнес уходит, просыпается dev-team_
   Ага, принял. Сделаю
 - (Л) Ну и ладушки. Поехали
 
-#### Код в студию!
+## Код в студию!
 
-А теперь давайте немного о суровом кодерском.
+А теперь давайте немного о суровом, кодерском.
 
 Допустим, условный "Андрюха" проспался, и прямо перед дейликом накидал
 что-то подобное:
@@ -101,31 +97,43 @@ _Бизнес уходит, просыпается dev-team_
 // types/table.d.ts
 import { HTMLAttributes } from "react";
 
-export interface IDataTable {
-  columng: string;
-  rows: string[];
+declare namespace NDataTable {
+  interface IDataTable {
+    columng: string;
+    rows: string[];
+  }
 }
 
-export interface ITableComponentProps
-  extends Partial<HTMLAttributes<HTMLDivElement>> {
+export = NDataTable;
+
+export as namespace AppTypes;
+```
+
+```ts
+// TableComponent/index.d.ts
+
+export interface IProps extends Partial<HTMLAttributes<HTMLDivElement>> {
   header: string;
   data: IDataTable[];
 }
 ```
 
-```jsx
-// TableComponent.jsx
+```tsx
+// TableComponent/index.tsx
+import { memo, async } from "react";
+import { IProps } from ".";
 
-/**
- * @returns {JSX.Element} Cool table Component
- *
- * @param {import("types/table").ITableComponentProps} props
- */
-export function TableComponent({ header, data = [], ...divAttrs }) {
+export function TableComponent({
+  header,
+  data = [],
+  ...divAttrs
+}: Readonly<IProps>) {
   const computedTableColumnRows = useCallback(
     rows => {
-      return rows.map(row => (
-        <div className="table__body__column__row">{row}</div>
+      return rows.map((row, idx) => (
+        <div className="table__body__column__row" key={`${idx}-row`}>
+          {row}
+        </div>
       ));
     },
     [data]
@@ -164,22 +172,131 @@ TableComponent.Variants = {
 export default TableComponent;
 ```
 
-```jsx
-// root.jsx
+```tsx
+// HomePage/index.tsx
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 
-/** @type {import("types/table").IDataTable[]} */
-const _mockDataTable = new Array(5).fill({
+const _mockDataTable: AppTypes.IDataTable[] = new Array(5).fill({
   column: "Some column header",
   rows: new Array(500).fill("Hello, Data Table World!")
 });
-/**
- * @returns {JSX.Element} Root element
- */
-export function App() {
-  return <TableComponent data={_mockDataTable} />;
+
+export function HomePage(): JSX.Element {
+  const [data, setData]: [
+    Record<String, unknown>,
+    Dispatch<SetStateAction<Record<string, unknown>>>
+  ] = useState();
+  // TODO Better move to separate hook
+  useEffect(() => {
+    const { abort, signal } = new AbortContoller();
+
+    fetch(`${process.env.REACT_APP_API_URL}/some-endpoint`, { signal })
+      .then(data => {
+        setState(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+    return () => {
+      abort();
+    };
+  }, []);
+
+  return (
+    <SomeParentComponent data={data}>
+      <TableComponent data={_mockDataTable} />
+    </SomeParentComponent>
+  );
 }
 ```
 
-#### Какого хрена здесь происходит?!
+### Нифига не понятно, но уже чутка интересно ^\_^
 
-Тихо-тихо, сейчас всё расскажу.
+Ладно-ладно, сек. Ща всё расскажу и покажу. Начнем с "фишечек", а точнее - с хуков.
+
+`useMemo`\|`useCallback`
+внутри компонента "TableComponent.tsx"
+`"наблюдают" за необходимыми им значениями, и запускают перерисовку`
+только в 2 случаях:
+
+- ЕСЛИ изменились значения у наблюдаемых в каждом конкретном хуке полей
+  {{< del >}}надеюсь вы знаете, что объекты сюда класть почти бессмысленно?{{< /del >}}
+- ЕСЛИ будет будет перерисован РОДИТЕЛЬСКИЙ (SomeParentComponent) компонент
+
+Собсна, резко и дерзко проникаем в вашу Любимую
+{{< del >}}IDE, ребзи, IDE!. Надо работу работать, а не вот это вот всё{{< /del >}},
+и видим следующее:
+
+#### Оффтоп
+
+---
+
+Что это?
+`Это` просто `один из способов добавления новых свойств компоненту, в простонародье - DotNotation`.
+Не каждому зайдет, но я, как только распробовал, влюбился
+(ибо в больших проектах, простите, за\*\*\*шься бегать по 20+ файлам,
+дабы проверить - это Асинхронный, Мемоизированный, или еще какой-то вариант Компонента.
+Тут, на мой вкус, нагляднее: `<TableComponent.Memoized />` \| `<TableComponent.Async />`
+или вообще "чистый" `<TableComponent />`. У - Удобно).
+
+---
+
+```tsx
+TableComponent.Variants = {
+  Memoized: memo(TableComponent),
+  Async: async(() => import(".")),
+  AsyncMemoized: memo(async(() => import(".")))
+};
+```
+
+Итак, что тут интересного? `Поля "Memoized"` и, может, `"AsyncMemoized"`.
+
+Давайте чисто "по верхам":
+"memo" заставляет React проводить глубокое сравнение свойств компонента,
+предотвращая излишние перерисовки. (Закрывает наше 2 ИЛИ)
+
+Пока забудем про
+[кучу нюансов](https://attardi.org/why-we-memo-all-the-things/),
+ибо на текущем этапе это позволит нам сделать главное:
+
+Вообще "на изи" пролететь код-ревью (А вы о чём подумали? 0_o)
+
+### И всё-таки, про мемоизацию...
+
+Так, как только прошли код-ревью, давайте вернемся "к нашим баранам", а точнее:
+к перерисовке при изменении родителя ("\<SomeParentComponent \/\>")
+
+```tsx
+// HomePage/index.tsx
+
+return (
+  <SomeParentComponent data={data}>
+    <TableComponent.Memoized data={_mockDataTable} />
+  </SomeParentComponent>
+);
+```
+
+Таким нехитрым приёмом, вы с какой-то степенью уверенности сможете сказать:
+"Я сделяль!", и вам даже не будет стыдно
+{{< del >}}
+но это не точно
+{{< /del >}}
+
+Причина такой самоуверенности в том, что, как бы, мы выполнили задание лида:
+
+- Таблица есть? Есть
+- \+\\\- 2000 строк в ней есть? Ну, если считать с колонками, то да, есть!
+- Тут есть какая-то базовая оптимизация? Есть
+- Батарейку при текущем решении мы поберегли? Ну, не сказать, что прям сильно, но
+  да, вполне
+
+## Вместо заключения
+
+Текущий пост не преследовал цели быть "супер-мега-всеобъемлющим" руководством
+по оптимизации компонентов.
+
+Скорее, это был около рабочий пример из давнего-давнего проекта, на котором
+хотелось показать возможные решения не всегда "подсвечиваемых" проблем,
+которые возникают при разработке на React'е
+(Да-да, Vue - я на тебя смотрю. Готовься, ты следующий)
