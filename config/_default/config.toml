@@ -54,10 +54,6 @@ defaultContentLanguageInSubdir = true
     identifier = "config-menu-tags"
     name = "Тэги"
     url = "tags"
-  [[menu.main]]
-    identified = "config-menu-contact"
-    name = "Контакты"
-    url = "contact"
 
 [languages]
   [languages.ru]
