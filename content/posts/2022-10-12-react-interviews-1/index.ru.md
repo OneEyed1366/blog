@@ -114,7 +114,7 @@ import { HTMLAttributes } from "react";
 
 export interface IProps extends Partial<HTMLAttributes<HTMLDivElement>> {
   header: string;
-  data: IDataTable[];
+  data: AppTypes.IDataTable[];
 }
 ```
 
