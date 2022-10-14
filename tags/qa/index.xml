@@ -9,7 +9,13 @@
 (ибо разрабы, будучи людьми &lt;code>прогрессивными&lt;/code> &amp;mdash;читать &lt;code>_ЛЕНИВЫМИ_&lt;/code>&amp;mdash; уже придумали довольно
 много инструментов, которые позволяют эту проблему решить.)&lt;/p>
 &lt;h3 id="список-костылей-карл-кос-ты-лей-инструментов-навскидку">Список (&lt;strong>Костылей, Карл. КОС-ТЫ-ЛЕЙ&lt;/strong>) инструментов, навскидку&lt;/h3>
-&lt;h4 id="jesthttpsjestjsio">&lt;a href="https://jestjs.io/">Jest&lt;/a>&lt;/h4>
+&lt;h4 id="jesthttpsjestjsio">&lt;a
+href="https://jestjs.io/"
+target="_blank" rel="noopener"
+>
+Jest
+&lt;/a>
+&lt;/h4>
 &lt;p>Являясь одним из самых популярных инструментов для тестирования, негласно считается
 &amp;ldquo;королем&amp;rdquo; среди Enterprise-приложений (но это не точно)
 Применяется как для &lt;code>Unit&lt;/code>, так и для &lt;code>Component&lt;/code> тестирования.
@@ -20,7 +26,13 @@
 )&lt;/p>
 &lt;p>Плюсы:&lt;/p>
 &lt;ul>
-&lt;li>Легче интергрируется с &lt;a href="https://testing-library.com/docs/react-testing-library/intro/">React-testing-library&lt;/a>&lt;/li>
+&lt;li>Легче интергрируется с &lt;a
+href="https://testing-library.com/docs/react-testing-library/intro/"
+target="_blank" rel="noopener"
+>
+React-testing-library
+&lt;/a>
+&lt;/li>
 &lt;li>Хорошая дока, которая позволит тебе в моменте посмотреть, где и что ты не туда запихал&lt;/li>
 &lt;li>Jest - лапочка, который легко и непринужденно вливается в любой проект (Не то, что я. &lt;em>ПЛАЧЕТ&lt;/em>)&lt;/li>
 &lt;li>Довольно шустро крутит (твои планы на пятничный вечер) все, что ты в него запихаешь&lt;/li>
@@ -33,15 +45,38 @@
 &lt;li>Е**нутая логика итерации по массиву&lt;/li>
 &lt;li>Залез в конфиги - пеняй на себя (особенно, если ты вообще не сечёшь, что и НАФИГА ты делаешь)&lt;/li>
 &lt;/ul>
-&lt;h4 id="mochahttpsmochajsorg--chaihttpswwwchaijscom">&lt;a href="https://mochajs.org/">Mocha&lt;/a> + &lt;a href="https://www.chaijs.com/">Chai&lt;/a>&lt;/h4>
+&lt;h4 id="mochahttpsmochajsorg--chaihttpswwwchaijscom">&lt;a
+href="https://mochajs.org/"
+target="_blank" rel="noopener"
+>
+Mocha
+&lt;/a>
++ &lt;a
+href="https://www.chaijs.com/"
+target="_blank" rel="noopener"
+>
+Chai
+&lt;/a>
+&lt;/h4>
 &lt;p>&amp;ldquo;Бонни и Клайд&amp;rdquo; в мире тестирования Web SPA приложений.
 Долго и упорно наступают на пятки &amp;ldquo;мастодонту&amp;rdquo; в лице Jest&amp;rsquo;а.&lt;/p>
 &lt;p>Применяются также для &lt;code>Unit&lt;/code>, &lt;code>Component&lt;/code> &amp;amp; &lt;code>Интеграционного&lt;/code> тестирования.&lt;/p>
 &lt;p>Большой плюс: &lt;em>Интеграционное&lt;/em> тестирование легче масштабируется
 (понятный большинству пример: сравните количество boilerplate&amp;rsquo;а у ванильного
-&lt;a href="https://redux.js.org/">&lt;em>Redux&lt;/em>&lt;/a>
+&lt;a
+href="https://redux.js.org/"
+target="_blank" rel="noopener"
+>
+&lt;em>Redux&lt;/em>
+&lt;/a>
 &amp;amp;
-&lt;a href="https://mobx.js.org/">&lt;em>MobX&lt;/em>&lt;/a>&lt;/p>
+&lt;a
+href="https://mobx.js.org/"
+target="_blank" rel="noopener"
+>
+&lt;em>MobX&lt;/em>
+&lt;/a>
+&lt;/p>
 &lt;p>Плюсы:&lt;/p>
 &lt;ul>
 &lt;li>Вроде как легче интегрироваться с экосистемой Vue2
@@ -68,7 +103,13 @@
 &lt;li>Mocha без Chai, что Нацу без Хэппи. Жить можно, но грустно.
 (Да и, как-бы, НАФИГА?!)&lt;/li>
 &lt;/ul>
-&lt;h4 id="cypresshttpsdocscypressioguidesoverviewwhy-cypresswhat-you-ll-learn">&lt;a href="https://docs.cypress.io/guides/overview/why-cypress#What-you-ll-learn">Cypress&lt;/a>&lt;/h4>
+&lt;h4 id="cypresshttpsdocscypressioguidesoverviewwhy-cypresswhat-you-ll-learn">&lt;a
+href="https://docs.cypress.io/guides/overview/why-cypress#What-you-ll-learn"
+target="_blank" rel="noopener"
+>
+Cypress
+&lt;/a>
+&lt;/h4>
 &lt;p>&amp;ldquo;И вот, на 3 день!..&amp;rdquo;
 Ладно-ладно, интригу нагнал, теперь можно и пояснить.&lt;/p>
 &lt;p>Плюсы:&lt;/p>
@@ -98,8 +139,19 @@
 &lt;p>Итак, мы бегло посмотрели на &amp;ldquo;главных игроков&amp;rdquo; QA-рынка
 (в моих бредовых фантазиях. Да-да, санитары уже выехали),
 но раз инструменты - есть, потребность - есть, то почему все эти
-&lt;a href="https://habr.com/ru/company/ruvds/blog/450316/">TDD&lt;/a>,
-&lt;a href="https://ru.wikipedia.org/wiki/BDD_(%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5)">BDD&lt;/a>
+&lt;a
+href="https://habr.com/ru/company/ruvds/blog/450316/"
+target="_blank" rel="noopener"
+>
+TDD
+&lt;/a>
+,
+&lt;a
+href="https://ru.wikipedia.org/wiki/BDD_%28%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%29"
+target="_blank" rel="noopener"
+>
+BDD
+&lt;/a>
 и прочее еще не стали мейнстримом?&lt;/p>
 &lt;p>(Оффтоп: если стало - сорян, автор в танке и пошел выпить &lt;em>йаду&lt;/em>. Дальше лучше не читать)&lt;/p>
 &lt;p>По моему опыту, проблема всегда плюс-минус одна: &lt;strong>ДОРОГО&lt;/strong>.&lt;/p>

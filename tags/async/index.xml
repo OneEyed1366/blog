@@ -216,7 +216,13 @@ IDE, ребзи, IDE!. Надо работу работать, а не вот э
 &amp;ldquo;memo&amp;rdquo; заставляет React проводить глубокое сравнение свойств компонента,
 предотвращая излишние перерисовки. (Закрывает наше 2 ИЛИ)&lt;/p>
 &lt;p>Пока забудем про
-&lt;a href="https://attardi.org/why-we-memo-all-the-things/">кучу нюансов&lt;/a>,
+&lt;a
+href="https://attardi.org/why-we-memo-all-the-things/"
+target="_blank" rel="noopener"
+>
+кучу нюансов
+&lt;/a>
+,
 ибо на текущем этапе это позволит нам сделать главное:&lt;/p>
 &lt;p>Вообще &amp;ldquo;на изи&amp;rdquo; пролететь код-ревью (А вы о чём подумали? 0_o)&lt;/p>
 &lt;h3 id="и-всё-таки-про-мемоизацию">И всё-таки, про мемоизацию&amp;hellip;&lt;/h3>

@@ -3,11 +3,15 @@
 #<a href=https://oneeyed1366.github.io/blog/tags/javascript/>JavaScript</a>&nbsp;
 #<a href=https://oneeyed1366.github.io/blog/tags/security/>security</a>&nbsp;
 #<a href=https://oneeyed1366.github.io/blog/tags/web/>web</a>&nbsp;</span>
-<img src=/blog/posts/2022-10-10-js-interviews-1/cover.jpeg class=post-cover alt="Мозги на прокачку: безопасники, XSS и при чем тут формочки" title="Cover Image"><div class=table-of-contents><h2>Оглавление</h2><nav id=TableOfContents><ul><li><a href=#что>Что?</a></li><li><a href=#как>Как?</a></li><li><a href=#а-поточнее>А поточнее?</a><ul><li><a href=#допустим-через-_ссылки_>Допустим, через <em>ссылки</em></a></li><li><a href=#допустим-через-_dangerouslysetinnerhtml_>Допустим, через <em>dangerouslySetInnerHTML</em></a></li></ul></li><li><a href=#вредные-советы>Вредные советы</a></li></ul></nav></div><div class=post-content><div><h2 id=что>Что?<a href=#что class=hanchor arialabel=Anchor>&#8983;</a></h2><blockquote><p><code>XSS</code> - это термин, описывающий вредоносный скриптинг на сайте
+<img src=/blog/posts/2022-10-10-js-interviews-1/cover.jpeg class=post-cover alt="Мозги на прокачку: безопасники, XSS и при чем тут формочки" title="Cover Image"><div class=table-of-contents><h2>Оглавление</h2><nav id=TableOfContents><ul><li><a href=#что>Что?</a></li><li><a href=#как>Как?</a></li><li><a href=#а-поточнее>А поточнее?</a><ul><li><a href=#допустим-через-_ссылки_>Допустим, через <em>ссылки</em></a></li><li><a href=#допустим-через-_dangerouslysetinnerhtml_>Допустим, через <em>dangerouslySetInnerHTML</em></a></li></ul></li><li><a href=#вредные-советы>Вредные советы</a></li></ul></nav></div><div class=post-content><div><h2 id=что>Что?
+<a href=#что class=hanchor arialabel=Anchor>&#8983;</a></h2><blockquote><p><code>XSS</code> - это термин, описывающий вредоносный скриптинг на сайте
 путем <code>внедрения JavaScript</code> кода в тех частях пользовательского интерфейса,
-которые предварительно <code>не проверяются разработчиком</code></p></blockquote><h2 id=как>Как?<a href=#как class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Это <code>возможно из-за особенностей работы JS движков внутри браузера</code>.</p><p>Если точнее, то <code>движок</code>, по сути, <code>парсит скрипты из обычного текста</code>, а значит -
-ему до фонаря, откуда этот скрипт появился.</p><h2 id=а-поточнее>А поточнее?<a href=#а-поточнее class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Идея заключается в том, чтобы обходными путями добавить в приложение код,
-который изначально не был предусмотрен разработчиками.</p><h3 id=допустим-через-_ссылки_>Допустим, через <em>ссылки</em><a href=#допустим-через-_ссылки_ class=hanchor arialabel=Anchor>&#8983;</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-jsx data-lang=jsx><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>unsecuredInputId</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;unsecured-input_id&#34;</span>;
+которые предварительно <code>не проверяются разработчиком</code></p></blockquote><h2 id=как>Как?
+<a href=#как class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Это <code>возможно из-за особенностей работы JS движков внутри браузера</code>.</p><p>Если точнее, то <code>движок</code>, по сути, <code>парсит скрипты из обычного текста</code>, а значит -
+ему до фонаря, откуда этот скрипт появился.</p><h2 id=а-поточнее>А поточнее?
+<a href=#а-поточнее class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Идея заключается в том, чтобы обходными путями добавить в приложение код,
+который изначально не был предусмотрен разработчиками.</p><h3 id=допустим-через-_ссылки_>Допустим, через <em>ссылки</em>
+<a href=#допустим-через-_ссылки_ class=hanchor arialabel=Anchor>&#8983;</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-jsx data-lang=jsx><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>unsecuredInputId</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;unsecured-input_id&#34;</span>;
 </span></span><span style=display:flex><span><span style=color:#75715e>/** @type {[string, (data: string) =&gt; void]} */</span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> [<span style=color:#a6e22e>state</span>, <span style=color:#a6e22e>setState</span>] <span style=color:#f92672>=</span> <span style=color:#a6e22e>useState</span>();
 </span></span><span style=display:flex><span>
@@ -26,11 +30,14 @@
 </span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>a</span>&gt;
 </span></span><span style=display:flex><span>  &lt;/<span style=color:#f92672>div</span>&gt;
 </span></span><span style=display:flex><span>);
-</span></span></code></pre></div><h4 id=и-шо-ж-в-этом-плохого>И шо-ж в этом плохого??<a href=#и-шо-ж-в-этом-плохого class=hanchor arialabel=Anchor>&#8983;</a></h4><p>Допустим, <code>кулХацкер</code> введёт в радостно отрисованный ему input вот такую конструкцию
+</span></span></code></pre></div><h4 id=и-шо-ж-в-этом-плохого>И шо-ж в этом плохого??
+<a href=#и-шо-ж-в-этом-плохого class=hanchor arialabel=Anchor>&#8983;</a></h4><p>Допустим, <code>кулХацкер</code> введёт в радостно отрисованный ему input вот такую конструкцию
 (&ldquo;Cовершенно случайно&rdquo;)</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#a6e22e>javascript</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>alert</span>(<span style=color:#e6db74>&#34;Hello, Hacker World!&#34;</span>);
 </span></span></code></pre></div><p>В таком случае, после ввода данных может оказаться неприятная ситуация:</p><ol><li><code>кулХацкер</code> создал профиль с вот такой ссылкой (например, якобы на аккаунт ВК)</li><li><code>Невинный пользователь</code>, который хочет в личном письме высказать кулХацкеру, где он не прав,
 ничего не подозревая тыкает, докустим, на иконку, дабы перейти по ссылке</li><li>Вместо заветной странички обидчика, недоумевающий пользователь <code>видит alert</code>
-с сообщением &ldquo;Hello, Hacker World&rdquo;.</li></ol><p>Готово, вы великолепны (и, собсна, уволены)</p><h3 id=допустим-через-_dangerouslysetinnerhtml_>Допустим, через <em>dangerouslySetInnerHTML</em><a href=#допустим-через-_dangerouslysetinnerhtml_ class=hanchor arialabel=Anchor>&#8983;</a></h3><h4 id=оффтоп>Оффтоп<a href=#оффтоп class=hanchor arialabel=Anchor>&#8983;</a></h4><p>Видел в паре проектов выставление иконок таким способом, особеннно -
+с сообщением &ldquo;Hello, Hacker World&rdquo;.</li></ol><p>Готово, вы великолепны (и, собсна, уволены)</p><h3 id=допустим-через-_dangerouslysetinnerhtml_>Допустим, через <em>dangerouslySetInnerHTML</em>
+<a href=#допустим-через-_dangerouslysetinnerhtml_ class=hanchor arialabel=Anchor>&#8983;</a></h3><h4 id=оффтоп>Оффтоп
+<a href=#оффтоп class=hanchor arialabel=Anchor>&#8983;</a></h4><p>Видел в паре проектов выставление иконок таким способом, особеннно -
 если они получались откуда-то с сервера, и потом парсились в текст.</p><p>Если <code>Вы</code> с таким <code>не сталкивались</code> - <code>круто</code>, вам повезло.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-jsx data-lang=jsx><span style=display:flex><span><span style=color:#75715e>/** @type {[string, (data: string) =&gt; void]} */</span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> [<span style=color:#a6e22e>innerHtml</span>, <span style=color:#a6e22e>setInnerHtml</span>] <span style=color:#f92672>=</span> <span style=color:#a6e22e>useState</span>(<span style=color:#e6db74>&#34;&#34;</span>);
 </span></span><span style=display:flex><span>
@@ -57,14 +64,16 @@
 </span></span><span style=display:flex><span>    /&gt;
 </span></span><span style=display:flex><span>  &lt;/<span style=color:#f92672>div</span>&gt;
 </span></span><span style=display:flex><span>);
-</span></span></code></pre></div><h4 id=и-шо-ж-в-этом-плохого-1>И шо-ж в этом плохого??<a href=#и-шо-ж-в-этом-плохого-1 class=hanchor arialabel=Anchor>&#8983;</a></h4><p>Допустим, <code>кулХацкер №2</code> (поскольку у вас <code>нет SSL сертификата</code>) как <code>man-in-the-middle</code>
+</span></span></code></pre></div><h4 id=и-шо-ж-в-этом-плохого-1>И шо-ж в этом плохого??
+<a href=#и-шо-ж-в-этом-плохого-1 class=hanchor arialabel=Anchor>&#8983;</a></h4><p>Допустим, <code>кулХацкер №2</code> (поскольку у вас <code>нет SSL сертификата</code>) как <code>man-in-the-middle</code>
 перехватил данные, которые летят с вашего сервака, и теперь <code>шлёт</code> в ответе
 <code>не SVG'шку</code>, а</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>script</span>&gt;
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>alert</span>(<span style=color:#e6db74>&#34;Hello, Hacker World!&#34;</span>);
 </span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>script</span>&gt;
 </span></span></code></pre></div><p>При таком раскладе, поскольку вы <code>используете dangerouslySetInnerHTML</code>,
 то браузер превратит этот ответ в элемент DOM-дерева, а значит - Пам-Пам.</p><p>Да-да, все верно. <code>JavaScript движок</code>, увидя не обработанный скрипт,
-<code>со спокойной браузерной душой выполнит все</code>, что отправил ему <code>кулХацкер №2</code></p><p>Итог? Вы очешуенны (и снова уволены)</p><h2 id=вредные-советы>Вредные советы<a href=#вредные-советы class=hanchor arialabel=Anchor>&#8983;</a></h2><ol><li><p>Никогда не <code>ВАЛИДИРУЙТЕ</code> то, <code>ЧТО ВВОДИТ ПОЛЬЗОВАТЕЛЬ</code>. Серьезно,
+<code>со спокойной браузерной душой выполнит все</code>, что отправил ему <code>кулХацкер №2</code></p><p>Итог? Вы очешуенны (и снова уволены)</p><h2 id=вредные-советы>Вредные советы
+<a href=#вредные-советы class=hanchor arialabel=Anchor>&#8983;</a></h2><ol><li><p>Никогда не <code>ВАЛИДИРУЙТЕ</code> то, <code>ЧТО ВВОДИТ ПОЛЬЗОВАТЕЛЬ</code>. Серьезно,
 нафига тратить время на такую глупую штуку, когда можно по****ить
 на себя в зеркале?</p></li><li><p>Никогда не <code>УСТАНАВЛИВАЙТЕ SSL-СЕРТИФИКАТ</code>, ибо нафига - у вас же User
 никогда ничего в Web-Приложухе не делает. Так зачем заморачиваться??</p></li><li><p>Никогда не <code>СЛЕДИТЕ ЗА dangerouslySetInnerHTML</code>, ибо - нафига?
