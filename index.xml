@@ -1,11 +1,262 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title/><link>https://oneeyed1366.github.io/blog/</link><description>Recent content on</description><generator>Hugo -- gohugo.io</generator><language>ru</language><lastBuildDate>Mon, 10 Oct 2022 08:52:39 +0300</lastBuildDate><atom:link href="https://oneeyed1366.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Мозги на прокачку: безопасники, XSS и при чем тут формочки</title><link>https://oneeyed1366.github.io/blog/posts/2022-10-10-js-interviews-1/</link><pubDate>Mon, 10 Oct 2022 08:52:39 +0300</pubDate><guid>https://oneeyed1366.github.io/blog/posts/2022-10-10-js-interviews-1/</guid><description>Что? XSS - это термин, описывающий вредоносный скриптинг на сайте путем внедрения JavaScript кода через пользовательский интерфейс ИЛИ адресную строку
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title/><link>https://oneeyed1366.github.io/blog/</link><description>Recent content on</description><generator>Hugo -- gohugo.io</generator><language>ru</language><lastBuildDate>Wed, 12 Oct 2022 14:45:00 +0300</lastBuildDate><atom:link href="https://oneeyed1366.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Въетнамские флэшбэки: Девичья память у React'а (и немножко DotNotation)</title><link>https://oneeyed1366.github.io/blog/posts/2022-10-12-react-interviews-1/</link><pubDate>Wed, 12 Oct 2022 14:45:00 +0300</pubDate><guid>https://oneeyed1366.github.io/blog/posts/2022-10-12-react-interviews-1/</guid><description>Оффтоп Крутые-модные-молодежные Svelte&amp;rsquo;ы, Solid&amp;rsquo;ы, Qwik&amp;rsquo;и и прочее сегодня не рассматриваем, ибо каждый из них топит за свою идеологию и способ работы.
+Мы тут сегодня про &amp;ldquo;старпёров&amp;rdquo; (слышит голос вдалеке: &amp;ldquo;Ма, неси таблетки, деда снова накрыло&amp;rdquo;)
+Про что поговорим? Про ЁПТИМИЗАЦИЮ (автор хотел, правда хотел написать правильно, но не сдержался)
+Шта? &amp;lsquo;ЁПТИМИЗАЦИЯ&amp;rsquo;???? 0_o Ага, именно так, и именно через &amp;ldquo;ё&amp;rdquo;, ибо хоть одна из главных &amp;quot;фишек&amp;quot; React'а по сравнению с Angular &amp;amp; Vue, это возможность достаточно тонко управлять процессом рендеринга UI в Web-Приложении, но по опыту выходит примерно вот как:</description><content>&lt;hr>
+&lt;h2 id="оффтоп">Оффтоп&lt;/h2>
+&lt;p>Крутые-модные-молодежные &lt;em>Svelte&amp;rsquo;ы&lt;/em>, &lt;em>Solid&amp;rsquo;ы&lt;/em>, &lt;em>Qwik&amp;rsquo;и&lt;/em> и прочее
+сегодня не рассматриваем, ибо каждый из них топит за свою идеологию и способ
+работы.&lt;/p>
+&lt;p>Мы тут сегодня про &amp;ldquo;старпёров&amp;rdquo;
+(&lt;em>слышит голос вдалеке&lt;/em>: &amp;ldquo;Ма, неси таблетки, деда снова накрыло&amp;rdquo;)&lt;/p>
+&lt;hr>
+&lt;h2 id="про-что-поговорим">Про что поговорим?&lt;/h2>
+&lt;p>Про &lt;code>ЁПТИМИЗАЦИЮ&lt;/code>
+(автор хотел, правда хотел написать правильно, но не сдержался)&lt;/p>
+&lt;h2 id="шта-ёптимизация-0_o">Шта? &amp;lsquo;ЁПТИМИЗАЦИЯ&amp;rsquo;???? 0_o&lt;/h2>
+&lt;p>Ага, именно так, и именно через &amp;ldquo;ё&amp;rdquo;, ибо хоть
+&lt;code>одна из&lt;/code> главных &lt;code>&amp;quot;фишек&amp;quot; React'а&lt;/code> по сравнению с &lt;em>Angular&lt;/em> &amp;amp; &lt;em>Vue&lt;/em>,
+&lt;code>это возможность&lt;/code> достаточно &lt;code>тонко управлять процессом рендеринга&lt;/code>
+UI в Web-Приложении, но по опыту выходит примерно вот как:&lt;/p>
+&lt;p>Покуда не &amp;ldquo;съел на этом собаку&amp;rdquo;, можно не раз и ДАЛЕКО не два выстрелить себе
+в колено
+&lt;del>
+хотя не, о чём это я.
+Тут жеж все "тру-JS-developer'ы", а не "framework'щики" какие-то, как я (плачет)
+&lt;/del>
+&lt;/p>
+&lt;hr>
+&lt;p>(Подумав, клеит на React ярлычок &amp;ldquo;Fedora&amp;rdquo;, на Vue - &amp;ldquo;MacOSX Mountain Lion&amp;rdquo;,
+а на Angular - &amp;ldquo;Windows 10 for Business&amp;rdquo;)&lt;/p>
+&lt;h2 id="спектакль-в-2-действиях">Спектакль в 2 действиях&lt;/h2>
+&lt;p>Давайте представим, что бизнес врывается с ноги в dev-team чат, и такой:&lt;/p>
+&lt;ul>
+&lt;li>(Б - Бизнес) НАМ нужен ДАШБОРД!&lt;/li>
+&lt;li>(Р - Какой-то разраб) Ну ок, нужен и нужен. (косит под дурака) Мы-то тут причём??&lt;/li>
+&lt;li>(Л - ТехЛид) А накиньте контекста: что хотите показывать, для кого делаем, что по эстимейтам, &amp;hellip;?&lt;/li>
+&lt;li>(Б) Большой ДАШБОРД! Чтобы там как только мы в админке что-то поменяли, сразу
+рисовалось тут! И чтобы графики моментально были! Столбчатые! Нет, даже Ленточные!
+Даже оба сразу, и чтобы не лагало! Вообще! Сделаете???&lt;/li>
+&lt;li>(Л) Ну, в принципе, понятно.
+Давайте соберемся на созвон, обсудим возможные риски и приоритеты
+в соответствии с уже имеющимися задачами.&lt;/li>
+&lt;li>(Б) ОК! Завтра, в течение дня!&lt;/li>
+&lt;li>(Л) Ок.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;em>Бизнес уходит, просыпается &amp;ldquo;мафиозный&amp;rdquo; dev-team&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>(Л) Народ, вангую, что нас припашут ваять аналог AgGrid, но чисто свой,
+и чтобы с плюшками.&lt;/li>
+&lt;li>(Р) А в чём проблема взять AgGrid?&lt;/li>
+&lt;li>(Л) Скорее всего, в лицензии, ибо тут бизнес, возможно, захочет собирать
+стату по какому-то внутреннему проекту, у которого бюджета - что кот наплакал.
+Ну или просто показать CEO с СТО, за что мы свой хлеб едим. Андрюха?&lt;/li>
+&lt;li>(А - Андрюха) (отвлекается от просмотра боя в Dear Or Alive: Paradise) А??&lt;/li>
+&lt;li>(Л) Короче, скорее всего в тебя прилетит таска: сваять таблицу, пока просто -
+без графиков. Так, чтобы там бодро рисовалось, но чтобы не выжирало батарейку
+у ноута в ноль за полминуты. Прям супер производительность пока не нужна, но лучше на начальном
+этапе потратить чутка времени на оптимизацию. Потянешь?&lt;/li>
+&lt;li>(Р) ОптЕмизацию&lt;/li>
+&lt;li>(Л) Ага, спс. Кстати, как там тесты? Написал?&lt;/li>
+&lt;li>(Р) (исчез из-за &amp;ldquo;внезапно&amp;rdquo; появившихся проблем с сетью)&lt;/li>
+&lt;li>(Л) Так, Андрюх - ты пока поизучай доку по рендерингу реакта, и сделай прототип.
+Ну, допустим, с 2000 строк. Чисто &amp;ldquo;Hello, world!&amp;rdquo; в каждой.
+Если что - пингуй, я подскажу&lt;/li>
+&lt;li>(А) (кивает, но вообще ни в зуб ногой, чё от него хотят, ибо всю ночь гонял в &amp;ldquo;танки&amp;rdquo;)
+Ага, принял. Сделаю&lt;/li>
+&lt;li>(Л) Ну и ладушки. Поехали&lt;/li>
+&lt;/ul>
+&lt;h2 id="код-в-студию">Код в студию!&lt;/h2>
+&lt;p>А теперь давайте немного о суровом, кодерском.&lt;/p>
+&lt;p>Допустим, условный &amp;ldquo;Андрюха&amp;rdquo; проспался, и прямо перед дейликом накидал
+что-то подобное:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-ts" data-lang="ts">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// types/table.d.ts
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">declare&lt;/span> &lt;span style="color:#66d9ef">namespace&lt;/span> &lt;span style="color:#a6e22e">NDataTable&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">interface&lt;/span> &lt;span style="color:#a6e22e">IDataTable&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">columng&lt;/span>: &lt;span style="color:#66d9ef">string&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">rows&lt;/span>: &lt;span style="color:#66d9ef">string&lt;/span>[];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">export&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">NDataTable&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">export&lt;/span> &lt;span style="color:#66d9ef">as&lt;/span> &lt;span style="color:#66d9ef">namespace&lt;/span> &lt;span style="color:#a6e22e">AppTypes&lt;/span>;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-ts" data-lang="ts">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// TableComponent/index.d.ts
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">import&lt;/span> { &lt;span style="color:#a6e22e">HTMLAttributes&lt;/span> } &lt;span style="color:#66d9ef">from&lt;/span> &lt;span style="color:#e6db74">&amp;#34;react&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">export&lt;/span> &lt;span style="color:#66d9ef">interface&lt;/span> &lt;span style="color:#a6e22e">IProps&lt;/span> &lt;span style="color:#66d9ef">extends&lt;/span> &lt;span style="color:#a6e22e">Partial&lt;/span>&amp;lt;&lt;span style="color:#f92672">HTMLAttributes&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">&amp;lt;&lt;/span>&lt;span style="color:#a6e22e">HTMLDivElement&lt;/span>&amp;gt;&lt;span style="color:#f92672">&amp;gt;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">header&lt;/span>: &lt;span style="color:#66d9ef">string&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">data&lt;/span>: &lt;span style="color:#66d9ef">IDataTable&lt;/span>[];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-tsx" data-lang="tsx">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// TableComponent/index.tsx
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">import&lt;/span> { &lt;span style="color:#a6e22e">memo&lt;/span>, &lt;span style="color:#66d9ef">async&lt;/span> } &lt;span style="color:#66d9ef">from&lt;/span> &lt;span style="color:#e6db74">&amp;#34;react&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">import&lt;/span> { &lt;span style="color:#a6e22e">IProps&lt;/span> } &lt;span style="color:#66d9ef">from&lt;/span> &lt;span style="color:#e6db74">&amp;#34;.&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">export&lt;/span> &lt;span style="color:#66d9ef">function&lt;/span> &lt;span style="color:#a6e22e">TableComponent&lt;/span>({
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">header&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">data&lt;/span> &lt;span style="color:#f92672">=&lt;/span> [],
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ...&lt;span style="color:#a6e22e">divAttrs&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">Readonly&lt;/span>&amp;lt;&lt;span style="color:#f92672">IProps&lt;/span>&amp;gt;) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">computedTableColumnRows&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">useCallback&lt;/span>(
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">rows&lt;/span> &lt;span style="color:#f92672">=&amp;gt;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">rows&lt;/span>.&lt;span style="color:#a6e22e">map&lt;/span>((&lt;span style="color:#a6e22e">row&lt;/span>, &lt;span style="color:#a6e22e">idx&lt;/span>) &lt;span style="color:#f92672">=&amp;gt;&lt;/span> (
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">className&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;table__body__column__row&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">key&lt;/span>&lt;span style="color:#f92672">=&lt;/span>{&lt;span style="color:#e6db74">`&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>&lt;span style="color:#a6e22e">idx&lt;/span>&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">-row`&lt;/span>}&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {&lt;span style="color:#a6e22e">row&lt;/span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#a6e22e">data&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> );
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">computedTableBody&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">useMemo&lt;/span>(() &lt;span style="color:#f92672">=&amp;gt;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">data&lt;/span>.&lt;span style="color:#a6e22e">length&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">className&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;table__body__no-data&amp;#34;&lt;/span>&amp;gt;&lt;span style="color:#a6e22e">No&lt;/span> &lt;span style="color:#a6e22e">Data&lt;/span>&amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> (
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {&lt;span style="color:#a6e22e">data&lt;/span>.&lt;span style="color:#a6e22e">map&lt;/span>(&lt;span style="color:#a6e22e">item&lt;/span> &lt;span style="color:#f92672">=&amp;gt;&lt;/span> (
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">className&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;table__body__column__header&amp;#34;&lt;/span>&amp;gt;{&lt;span style="color:#a6e22e">item&lt;/span>.&lt;span style="color:#a6e22e">column&lt;/span>}&amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {&lt;span style="color:#a6e22e">computedTableColumnRows&lt;/span>(&lt;span style="color:#a6e22e">item&lt;/span>.&lt;span style="color:#a6e22e">rows&lt;/span>)}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ))}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> );
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }, [&lt;span style="color:#a6e22e">data&lt;/span>]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> (
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> {&lt;span style="color:#a6e22e">...divAttrs&lt;/span>}&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">className&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;table__header&amp;#34;&lt;/span>&amp;gt;{&lt;span style="color:#a6e22e">header&lt;/span> &lt;span style="color:#f92672">||&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Default table name&amp;#34;&lt;/span>}&amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">className&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;table__body&amp;#34;&lt;/span>&amp;gt;{&lt;span style="color:#a6e22e">computedTableBody&lt;/span>}&amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> );
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">TableComponent&lt;/span>.&lt;span style="color:#a6e22e">Variants&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Memoized&lt;/span>: &lt;span style="color:#66d9ef">memo&lt;/span>(&lt;span style="color:#a6e22e">TableComponent&lt;/span>),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Async&lt;/span>: &lt;span style="color:#66d9ef">async&lt;/span>(() &lt;span style="color:#f92672">=&amp;gt;&lt;/span> &lt;span style="color:#66d9ef">import&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;.&amp;#34;&lt;/span>)),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">AsyncMemoized&lt;/span>: &lt;span style="color:#66d9ef">memo&lt;/span>(&lt;span style="color:#66d9ef">async&lt;/span>(() &lt;span style="color:#f92672">=&amp;gt;&lt;/span> &lt;span style="color:#66d9ef">import&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;.&amp;#34;&lt;/span>)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">export&lt;/span> &lt;span style="color:#66d9ef">default&lt;/span> &lt;span style="color:#a6e22e">TableComponent&lt;/span>;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-tsx" data-lang="tsx">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// HomePage/index.tsx
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">import&lt;/span> { &lt;span style="color:#a6e22e">useState&lt;/span>, &lt;span style="color:#a6e22e">useEffect&lt;/span>, &lt;span style="color:#a6e22e">Dispatch&lt;/span>, &lt;span style="color:#a6e22e">SetStateAction&lt;/span> } &lt;span style="color:#66d9ef">from&lt;/span> &lt;span style="color:#e6db74">&amp;#34;react&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">rows&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Array(&lt;span style="color:#ae81ff">500&lt;/span>).&lt;span style="color:#a6e22e">fill&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Hello, Data Table World!&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">_mockDataTable&lt;/span>: &lt;span style="color:#66d9ef">AppTypes.IDataTable&lt;/span>[] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Array(&lt;span style="color:#ae81ff">5&lt;/span>).&lt;span style="color:#a6e22e">fill&lt;/span>({
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">column&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Some column header&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">rows&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">export&lt;/span> &lt;span style="color:#66d9ef">function&lt;/span> &lt;span style="color:#a6e22e">HomePage&lt;/span>()&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">JSX&lt;/span>.&lt;span style="color:#a6e22e">Element&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> [&lt;span style="color:#a6e22e">data&lt;/span>, &lt;span style="color:#a6e22e">setData&lt;/span>]&lt;span style="color:#f92672">:&lt;/span> [
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Record&lt;/span>&amp;lt;&lt;span style="color:#f92672">String&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">,&lt;/span> &lt;span style="color:#a6e22e">unknown&lt;/span>&amp;gt;,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Dispatch&lt;/span>&amp;lt;&lt;span style="color:#f92672">SetStateAction&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">&amp;lt;&lt;/span>&lt;span style="color:#a6e22e">Record&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">&amp;lt;&lt;/span>&lt;span style="color:#a6e22e">string&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">,&lt;/span> &lt;span style="color:#a6e22e">unknown&lt;/span>&amp;gt;&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">useState&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// TODO Better move to separate hook
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">useEffect&lt;/span>(() &lt;span style="color:#f92672">=&amp;gt;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> { &lt;span style="color:#a6e22e">abort&lt;/span>, &lt;span style="color:#a6e22e">signal&lt;/span> } &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">AbortContoller&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fetch&lt;/span>(&lt;span style="color:#e6db74">`&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>&lt;span style="color:#a6e22e">process&lt;/span>.&lt;span style="color:#a6e22e">env&lt;/span>.&lt;span style="color:#a6e22e">REACT_APP_API_URL&lt;/span>&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">/some-endpoint`&lt;/span>, { &lt;span style="color:#a6e22e">signal&lt;/span> })
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">then&lt;/span>(&lt;span style="color:#a6e22e">data&lt;/span> &lt;span style="color:#f92672">=&amp;gt;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">setState&lt;/span>(&lt;span style="color:#a6e22e">data&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> })
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#66d9ef">catch&lt;/span>(&lt;span style="color:#a6e22e">error&lt;/span> &lt;span style="color:#f92672">=&amp;gt;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">error&lt;/span>(&lt;span style="color:#a6e22e">error&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> });
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> () &lt;span style="color:#f92672">=&amp;gt;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">abort&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> };
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }, []);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> (
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">SomeParentComponent&lt;/span> &lt;span style="color:#a6e22e">data&lt;/span>&lt;span style="color:#f92672">=&lt;/span>{&lt;span style="color:#a6e22e">data&lt;/span>}&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">TableComponent&lt;/span> &lt;span style="color:#a6e22e">data&lt;/span>&lt;span style="color:#f92672">=&lt;/span>{&lt;span style="color:#a6e22e">_mockDataTable&lt;/span>} /&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">SomeParentComponent&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> );
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="нифига-не-понятно-но-уже-чутка-интересно-_">Нифига не понятно, но уже чутка интересно ^_^&lt;/h3>
+&lt;p>Ладно-ладно, сек. Ща всё расскажу и покажу. Начнем с &amp;ldquo;фишечек&amp;rdquo;, а точнее - с хуков.&lt;/p>
+&lt;p>&lt;code>useMemo&lt;/code>|&lt;code>useCallback&lt;/code>
+внутри компонента &amp;ldquo;TableComponent.tsx&amp;rdquo;
+&lt;code>&amp;quot;наблюдают&amp;quot; за необходимыми им значениями, и запускают перерисовку&lt;/code>
+только в 2 случаях:&lt;/p>
+&lt;ul>
+&lt;li>ЕСЛИ изменились значения у наблюдаемых в каждом конкретном хуке полей
+&lt;del>
+надеюсь вы знаете, что объекты сюда класть почти бессмысленно?
+&lt;/del>
+&lt;/li>
+&lt;li>ЕСЛИ будет будет перерисован РОДИТЕЛЬСКИЙ (SomeParentComponent) компонент&lt;/li>
+&lt;/ul>
+&lt;p>Собсна, резко и дерзко проникаем в вашу Любимую
+&lt;del>
+IDE, ребзи, IDE!. Надо работу работать, а не вот это вот всё
+&lt;/del>
+,
+и видим следующее:&lt;/p>
+&lt;h4 id="оффтоп-1">Оффтоп&lt;/h4>
+&lt;hr>
+&lt;p>Что это?
+&lt;code>Это&lt;/code> просто &lt;code>один из способов добавления новых свойств компоненту, в простонародье - DotNotation&lt;/code>.
+Не каждому зайдет, но я, как только распробовал, влюбился
+(ибо в больших проектах, простите, за***шься бегать по 20+ файлам,
+дабы проверить - это Асинхронный, Мемоизированный, или еще какой-то вариант Компонента.
+Тут, на мой вкус, нагляднее: &lt;code>&amp;lt;TableComponent.Memoized /&amp;gt;&lt;/code> | &lt;code>&amp;lt;TableComponent.Async /&amp;gt;&lt;/code>
+или вообще &amp;ldquo;чистый&amp;rdquo; &lt;code>&amp;lt;TableComponent /&amp;gt;&lt;/code>. У - Удобно).&lt;/p>
+&lt;hr>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-tsx" data-lang="tsx">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">TableComponent&lt;/span>.&lt;span style="color:#a6e22e">Variants&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Memoized&lt;/span>: &lt;span style="color:#66d9ef">memo&lt;/span>(&lt;span style="color:#a6e22e">TableComponent&lt;/span>),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Async&lt;/span>: &lt;span style="color:#66d9ef">async&lt;/span>(() &lt;span style="color:#f92672">=&amp;gt;&lt;/span> &lt;span style="color:#66d9ef">import&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;.&amp;#34;&lt;/span>)),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">AsyncMemoized&lt;/span>: &lt;span style="color:#66d9ef">memo&lt;/span>(&lt;span style="color:#66d9ef">async&lt;/span>(() &lt;span style="color:#f92672">=&amp;gt;&lt;/span> &lt;span style="color:#66d9ef">import&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;.&amp;#34;&lt;/span>)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Итак, что тут интересного? &lt;code>Поля &amp;quot;Memoized&amp;quot;&lt;/code> и, может, &lt;code>&amp;quot;AsyncMemoized&amp;quot;&lt;/code>.&lt;/p>
+&lt;p>Давайте чисто &amp;ldquo;по верхам&amp;rdquo;:
+&amp;ldquo;memo&amp;rdquo; заставляет React проводить глубокое сравнение свойств компонента,
+предотвращая излишние перерисовки. (Закрывает наше 2 ИЛИ)&lt;/p>
+&lt;p>Пока забудем про
+&lt;a href="https://attardi.org/why-we-memo-all-the-things/">кучу нюансов&lt;/a>,
+ибо на текущем этапе это позволит нам сделать главное:&lt;/p>
+&lt;p>Вообще &amp;ldquo;на изи&amp;rdquo; пролететь код-ревью (А вы о чём подумали? 0_o)&lt;/p>
+&lt;h3 id="и-всё-таки-про-мемоизацию">И всё-таки, про мемоизацию&amp;hellip;&lt;/h3>
+&lt;p>Так, как только прошли код-ревью, давайте вернемся &amp;ldquo;к нашим баранам&amp;rdquo;, а точнее:
+к перерисовке при изменении родителя (&amp;quot;&amp;lt;SomeParentComponent /&amp;gt;&amp;quot;)&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-tsx" data-lang="tsx">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// HomePage/index.tsx
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">return&lt;/span> (
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">SomeParentComponent&lt;/span> &lt;span style="color:#a6e22e">data&lt;/span>&lt;span style="color:#f92672">=&lt;/span>{&lt;span style="color:#a6e22e">data&lt;/span>}&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">TableComponent.Memoized&lt;/span> &lt;span style="color:#a6e22e">data&lt;/span>&lt;span style="color:#f92672">=&lt;/span>{&lt;span style="color:#a6e22e">_mockDataTable&lt;/span>} /&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">SomeParentComponent&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Таким нехитрым приёмом, вы с какой-то степенью уверенности сможете сказать:
+&amp;ldquo;Я сделяль!&amp;rdquo;, и вам даже не будет стыдно
+&lt;del>
+но это не точно
+&lt;/del>
+&lt;/p>
+&lt;p>Причина такой самоуверенности в том, что, как бы, мы выполнили задание лида:&lt;/p>
+&lt;ul>
+&lt;li>Таблица есть? Есть&lt;/li>
+&lt;li>+\- 2000 строк в ней есть? Ну, если считать с колонками, то да, есть!&lt;/li>
+&lt;li>Тут есть какая-то базовая оптимизация? Есть&lt;/li>
+&lt;li>Батарейку при текущем решении мы поберегли? Ну, не сказать, что прям сильно, но
+да, вполне&lt;/li>
+&lt;/ul>
+&lt;h2 id="вместо-заключения">Вместо заключения&lt;/h2>
+&lt;p>Текущий пост не преследовал цели быть &amp;ldquo;супер-мега-всеобъемлющим&amp;rdquo; руководством
+по оптимизации компонентов.&lt;/p>
+&lt;p>Скорее, это был около рабочий пример из давнего-давнего проекта, на котором
+хотелось показать возможные решения не всегда &amp;ldquo;подсвечиваемых&amp;rdquo; проблем,
+которые возникают при разработке на React&amp;rsquo;е
+(Да-да, Vue - я на тебя смотрю. Готовься, ты следующий)&lt;/p></content></item><item><title>Мозги на прокачку: безопасники, XSS и при чем тут формочки</title><link>https://oneeyed1366.github.io/blog/posts/2022-10-10-js-interviews-1/</link><pubDate>Mon, 10 Oct 2022 08:52:39 +0300</pubDate><guid>https://oneeyed1366.github.io/blog/posts/2022-10-10-js-interviews-1/</guid><description>Что? XSS - это термин, описывающий вредоносный скриптинг на сайте путем внедрения JavaScript кода в тех частях пользовательского интерфейса, которые предварительно не проверяются разработчиком
 Как? Это возможно из-за особенностей работы JS движков внутри браузера.
 Если точнее, то движок, по сути, парсит скрипты из обычного текста, а значит - ему до фонаря, откуда этот скрипт появился.
 А поточнее? Идея заключается в том, чтобы обходными путями добавить в приложение код, который изначально не был предусмотрен разработчиками.</description><content>&lt;h2 id="что">Что?&lt;/h2>
 &lt;blockquote>
 &lt;p>&lt;code>XSS&lt;/code> - это термин, описывающий вредоносный скриптинг на сайте
-путем &lt;code>внедрения JavaScript&lt;/code> кода &lt;code>через пользовательский интерфейс&lt;/code> ИЛИ
-&lt;code>адресную строку&lt;/code>&lt;/p>
+путем &lt;code>внедрения JavaScript&lt;/code> кода в тех частях пользовательского интерфейса,
+которые предварительно &lt;code>не проверяются разработчиком&lt;/code>&lt;/p>
 &lt;/blockquote>
 &lt;h2 id="как">Как?&lt;/h2>
 &lt;p>Это &lt;code>возможно из-за особенностей работы JS движков внутри браузера&lt;/code>.&lt;/p>
@@ -301,7 +552,7 @@ Scrum, Agile, и вот эту вот всю &amp;ldquo;движуху&amp;rdquo
 но сейчас - мы тут ржавчину убрали, тут подкрасили, тут костылик подставили - круто,
 теперь можно и фичу добавить.&lt;/p>
 &lt;p>Итог: эволюция/энволюция (тут как повезет).
-Из практики, чаще всего начинают именно этот путь, но вот стабильно ему следуют - единицы.&lt;/p></content></item><item><title>Кто такой 'pseudo:Blogger'?</title><link>https://oneeyed1366.github.io/blog/about/me/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://oneeyed1366.github.io/blog/about/me/</guid><description>Как личность? Я &amp;ldquo;гикнутый&amp;rdquo; на всю голову фанат собак, книжек и технологий, а также воспитатель чудесного лабрадора и 2 котов с 9-ти летним стажем.
+Из практики, чаще всего начинают именно этот путь, но вот стабильно ему следуют - единицы.&lt;/p></content></item><item><title>Кто такой 'pseudo::Blogger'?</title><link>https://oneeyed1366.github.io/blog/about/me/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://oneeyed1366.github.io/blog/about/me/</guid><description>Как личность? Я &amp;ldquo;гикнутый&amp;rdquo; на всю голову фанат собак, книжек и технологий, а также воспитатель чудесного лабрадора и 2 котов с 9-ти летним стажем.
 Люблю языки, в частности Итальянский. В свободное время стараюсь не забывать Английский, а также потихоньку изучать Китайский.
 Занимался музыкой, в своё время неплохо так прокачал скилл пианиста. Пытался в скрипку, но увы - вообще не мое. Зато пошла гитара.
 Как работяга? Я Формошлёп 50 уровня, работаю на TS, React\Vue и в качестве хобби потихоньку изучаю кросс-платформенную разработку на React Native/Dart - Flutter.</description><content>&lt;h2 id="как-личность">Как личность?&lt;/h2>
@@ -317,7 +568,7 @@ Scrum, Agile, и вот эту вот всю &amp;ldquo;движуху&amp;rdquo
 &lt;p>Начинал как &lt;code>Backend'ер&lt;/code> на &lt;code>Python, Django&lt;/code>, но потом, что называется, &amp;ldquo;перемкнуло&amp;rdquo;.&lt;/p>
 &lt;p>Работаю преимущественно как &lt;code>Аутсорсер&lt;/code>, но начинал в такой древней штуке как
 &lt;code>Web Студия&lt;/code>
-(в те бородатые времена, когда помимо кодерства надо было и на &amp;ldquo;нормальной&amp;rdquo; работе работать)&lt;/p></content></item><item><title>Что за 'псевдо:Блог' вообще?</title><link>https://oneeyed1366.github.io/blog/about/blog/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://oneeyed1366.github.io/blog/about/blog/</guid><description>Что? По сути, данный блог - это просто &amp;ldquo;сборная солянка&amp;rdquo; впечатлений и опыта 1 человека, который он ведет больше даже для себя, чем для остальных
+(в те бородатые времена, когда помимо кодерства надо было и на &amp;ldquo;нормальной&amp;rdquo; работе работать)&lt;/p></content></item><item><title>Что за 'pseudo::Blog' вообще?</title><link>https://oneeyed1366.github.io/blog/about/blog/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://oneeyed1366.github.io/blog/about/blog/</guid><description>Что? По сути, данный блог - это просто &amp;ldquo;сборная солянка&amp;rdquo; впечатлений и опыта 1 человека, который он ведет больше даже для себя, чем для остальных
 (Эгоизм 80 уровня &amp;ndash; ACTIVATED)
 Чтобы что? Цель данного блога - сохранить знания и мысли, которые покажутся мне важными.
 У данного блога НЕТ ЦЕЛЕЙ &amp;ldquo;убить дракона&amp;rdquo; (кидает камень в Reddit), &amp;ldquo;спасти принцессу&amp;rdquo; (Аудитория - привет!) или &amp;ldquo;жить долго и счастливо&amp;rdquo; (ибо скучно, и как в известном меме: I don&amp;rsquo;t wanna peace.</description><content>&lt;h2 id="что">Что?&lt;/h2>
