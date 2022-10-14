@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>react on </title>
+    <link>https://oneeyed1366.github.io/blog/tags/react/</link>
+    <description>Recent content in react on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ru</language>
+    <lastBuildDate>Wed, 12 Oct 2022 14:45:00 +0300</lastBuildDate><atom:link href="https://oneeyed1366.github.io/blog/tags/react/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Въетнамские флэшбэки: Девичья память у React&#39;а (и немножко DotNotation)</title>
+      <link>https://oneeyed1366.github.io/blog/posts/2022-10-12-react-interviews-1/</link>
+      <pubDate>Wed, 12 Oct 2022 14:45:00 +0300</pubDate>
+      
+      <guid>https://oneeyed1366.github.io/blog/posts/2022-10-12-react-interviews-1/</guid>
+      <description>Оффтоп Крутые-модные-молодежные Svelte&amp;rsquo;ы, Solid&amp;rsquo;ы, Qwik&amp;rsquo;и и прочее сегодня не рассматриваем, ибо каждый из них топит за свою идеологию и способ работы.
+Мы тут сегодня про &amp;ldquo;старпёров&amp;rdquo; (слышит голос вдалеке: &amp;ldquo;Ма, неси таблетки, деда снова накрыло&amp;rdquo;)
+Про что поговорим? Про оптимизацию и профилирование компонентов (и немножко о react&#39;овском геморрое) Про оптимизацию Одна из главных &amp;quot;фишек&amp;quot; React&#39;а по сравнению с Angular &amp;amp; Vue, это возможность достаточно тонко управлять процессом рендеринга UI в Web-Приложении (клеит на React ярлычок &amp;ldquo;Fedora&amp;rdquo;, Vue - &amp;ldquo;MacOSX Mountain Lion&amp;rdquo;, а на Angular - &amp;ldquo;Windows 10 for Business&amp;rdquo;)</description>
+      <content>&lt;hr&gt;
+&lt;h2 id=&#34;оффтоп&#34;&gt;Оффтоп&lt;/h2&gt;
+&lt;p&gt;Крутые-модные-молодежные &lt;em&gt;Svelte&amp;rsquo;ы&lt;/em&gt;, &lt;em&gt;Solid&amp;rsquo;ы&lt;/em&gt;, &lt;em&gt;Qwik&amp;rsquo;и&lt;/em&gt; и прочее
+сегодня не рассматриваем, ибо каждый из них топит за свою идеологию и способ
+работы.&lt;/p&gt;
+&lt;p&gt;Мы тут сегодня про &amp;ldquo;старпёров&amp;rdquo;
+(&lt;em&gt;слышит голос вдалеке&lt;/em&gt;: &amp;ldquo;Ма, неси таблетки, деда снова накрыло&amp;rdquo;)&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;про-что-поговорим&#34;&gt;Про что поговорим?&lt;/h2&gt;
+&lt;p&gt;Про &lt;code&gt;оптимизацию&lt;/code&gt; и &lt;code&gt;профилирование компонентов&lt;/code&gt;
+&lt;del class=&#34;del&#34;&gt;
+  (и немножко о react&#39;овском геморрое)
+&lt;/del&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;про-оптимизацию&#34;&gt;Про оптимизацию&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;Одна из&lt;/code&gt; главных &lt;code&gt;&amp;quot;фишек&amp;quot; React&#39;а&lt;/code&gt; по сравнению с &lt;em&gt;Angular&lt;/em&gt; &amp;amp; &lt;em&gt;Vue&lt;/em&gt;,
+&lt;code&gt;это возможность&lt;/code&gt; достаточно &lt;code&gt;тонко управлять процессом рендеринга&lt;/code&gt;
+UI в Web-Приложении
+(клеит на React ярлычок &amp;ldquo;Fedora&amp;rdquo;, Vue - &amp;ldquo;MacOSX Mountain Lion&amp;rdquo;,
+а на Angular - &amp;ldquo;Windows 10 for Business&amp;rdquo;)&lt;/p&gt;
+&lt;p&gt;Если точнее, то я сейчас говорю про то, &lt;code&gt;как React понимает&lt;/code&gt;,
+&lt;code&gt;что&lt;/code&gt; ему &lt;code&gt;пора работать и как&lt;/code&gt; мы можем &lt;code&gt;этим&lt;/code&gt; процессом &lt;code&gt;управлять&lt;/code&gt;.
+(&lt;em&gt;Внутренний голос&lt;/em&gt;: &amp;ldquo;а не балду гонять, ваяя постики в блог.&amp;rdquo; -&lt;em&gt;Задумался&lt;/em&gt;-)&lt;/p&gt;
+&lt;h4 id=&#34;и-и-и&#34;&gt;И-и-и???&lt;/h4&gt;
+&lt;p&gt;На самом деле, React проповедует достаточно простую, но эффективную идеологию
+&lt;code&gt;однонаправленного потока данных&lt;/code&gt; (о как звучит! Да-да, совсем накрыло)&lt;/p&gt;
+&lt;p&gt;Обычно о ней говорят в контексте работы с реактивностью, но свою &amp;ldquo;лепту&amp;rdquo; в
+отрисовку компонентов это тоже привносит
+(И, забегая вперед, не всегда очевидную, но прям существенную).&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h4 id=&#34;спектакль-в-2-действиях&#34;&gt;Спектакль в 2 действиях&lt;/h4&gt;
+&lt;p&gt;Давайте представим, что бизнес врывается с ноги в dev-team чат, и такой:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;(Б - Бизнес) НАМ нужен ДАШБОРД!&lt;/li&gt;
+&lt;li&gt;(Р - Какой-то разраб) Ну ок, нужен и нужен. (косит под дурака) Мы-то тут причём??&lt;/li&gt;
+&lt;li&gt;(Л - ТехЛид) А накиньте контекста: что хотите показывать, для кого делаем, что по эстимейтам, &amp;hellip;?&lt;/li&gt;
+&lt;li&gt;(Б) Большой ДАШБОРД! Чтобы там как только мы в админке что-то поменяли, сразу
+рисовалось тут! И чтобы графики моментально были! Столбчатые! Нет, даже Ленточные!
+Даже оба сразу, и чтобы не лагало! Вообще! Сделаете???&lt;/li&gt;
+&lt;li&gt;(Л) Ну, в принципе, понятно.
+Давайте соберемся на созвон, обсудим возможные риски и приоритеты
+в соответствии с уже имеющимися задачами.&lt;/li&gt;
+&lt;li&gt;(Б) ОК! Завтра, в течение дня!&lt;/li&gt;
+&lt;li&gt;(Л) Ок.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Бизнес уходит, просыпается (&lt;em&gt;мафия&lt;/em&gt;) dev-team&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;(Л) Народ, вангую, что нас припашут ваять аналог AgGrid, но чисто свой,
+и чтобы с плюшками.&lt;/li&gt;
+&lt;li&gt;(Р) А в чём проблема взять AgGrid?&lt;/li&gt;
+&lt;li&gt;(Л) Скорее всего, в лицензии, ибо тут бизнес, возможно, захочет собирать
+стату по какому-то внутреннему проекту, для которого бюджета кот наплакал.
+Ну или просто показать CEO с СТО, за что мы свой хлеб едим. Андрюха?&lt;/li&gt;
+&lt;li&gt;(А - Андрюха) (отвлекается от просмотра боя в Dear Or Alive: Paradise) А??&lt;/li&gt;
+&lt;li&gt;(Л) Короче, скорее всего в тебя прилетит таска: сваять таблицу, пока просто -
+без графиков. Так, чтобы там бодро рисовалось, но чтобы не выжирало батарейку
+у ноута в ноль за полминуты. Прям супер производительность пока не нужна, но лучше на начальном
+этапе потратить чутка времени на оптимизацию. Потянешь?&lt;/li&gt;
+&lt;li&gt;(Р) ОптЕмизацию&lt;/li&gt;
+&lt;li&gt;(Л) Ага, спс. Кстати, как там тесты? Написал?&lt;/li&gt;
+&lt;li&gt;(Р) (исчез из-за &amp;ldquo;внезапно&amp;rdquo; появившихся проблем с сетью)&lt;/li&gt;
+&lt;li&gt;(Л) Так, Андрюх - ты пока поизучай доку по рендерингу реакта, и сделай прототип.
+Ну, допустим, с 2000 строк. Чисто &amp;ldquo;Hello, world!&amp;rdquo; в каждой.
+Если что - пингуй, я подскажу&lt;/li&gt;
+&lt;li&gt;(А) (кивает, но вообще ни в зуб ногой, чё от него хотят, ибо всю ночь гонял в &amp;ldquo;танки&amp;rdquo;)
+Ага, принял. Сделаю&lt;/li&gt;
+&lt;li&gt;(Л) Ну и ладушки. Поехали&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;код-в-студию&#34;&gt;Код в студию!&lt;/h4&gt;
+&lt;p&gt;А теперь давайте немного о суровом кодерском.&lt;/p&gt;
+&lt;p&gt;Допустим, условный &amp;ldquo;Андрюха&amp;rdquo; проспался, и прямо перед дейликом накидал
+что-то подобное:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-ts&#34; data-lang=&#34;ts&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// types/table.d.ts
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; { &lt;span style=&#34;color:#a6e22e&#34;&gt;HTMLAttributes&lt;/span&gt; } &lt;span style=&#34;color:#66d9ef&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;react&amp;#34;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;IDataTable&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;columng&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;rows&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;[];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ITableComponentProps&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Partial&lt;/span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;HTMLAttributes&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;HTMLDivElement&lt;/span&gt;&amp;gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;header&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;IDataTable&lt;/span&gt;[];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-jsx&#34; data-lang=&#34;jsx&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// TableComponent.jsx
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @returns {JSX.Element} Cool table Component
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; *
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @param {import(&amp;#34;types/table&amp;#34;).ITableComponentProps} props
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;TableComponent&lt;/span&gt;({ &lt;span style=&#34;color:#a6e22e&#34;&gt;header&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [], ...&lt;span style=&#34;color:#a6e22e&#34;&gt;divAttrs&lt;/span&gt; }) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;computedTableColumnRows&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;useCallback&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;rows&lt;/span&gt; =&amp;gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;rows&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;map&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;row&lt;/span&gt; =&amp;gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;table__body__column__row&amp;#34;&lt;/span&gt;&amp;gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;row&lt;/span&gt;}&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ));
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    },
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    [&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  );
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;computedTableBody&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;useMemo&lt;/span&gt;(() =&amp;gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;length&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;table__body__no-data&amp;#34;&lt;/span&gt;&amp;gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;No&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Data&lt;/span&gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &amp;lt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        {&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;map&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;item&lt;/span&gt; =&amp;gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &amp;lt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;table__body__column__header&amp;#34;&lt;/span&gt;&amp;gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;item&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;column&lt;/span&gt;}&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            {&lt;span style=&#34;color:#a6e22e&#34;&gt;computedTableColumnRows&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;item&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;rows&lt;/span&gt;)}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &amp;lt;/&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ))}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &amp;lt;/&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    );
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }, [&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;]);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; {&lt;span style=&#34;color:#a6e22e&#34;&gt;...divAttrs&lt;/span&gt;}&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;table__header&amp;#34;&lt;/span&gt;&amp;gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;header&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Default table name&amp;#34;&lt;/span&gt;}&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;table__body&amp;#34;&lt;/span&gt;&amp;gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;computedTableBody&lt;/span&gt;}&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  );
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;TableComponent&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Variants&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;Memoized&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;memo&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;TableComponent&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;Async&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;async&lt;/span&gt;(() =&amp;gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.&amp;#34;&lt;/span&gt;)),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;AsyncMemoized&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;memo&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;async&lt;/span&gt;(() =&amp;gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.&amp;#34;&lt;/span&gt;)))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;default&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;TableComponent&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-jsx&#34; data-lang=&#34;jsx&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// root.jsx
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/** @type {import(&amp;#34;types/table&amp;#34;).IDataTable[]} */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;_mockDataTable&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Array(&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;fill&lt;/span&gt;({
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;column&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Some column header&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;rows&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Array(&lt;span style=&#34;color:#ae81ff&#34;&gt;500&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;fill&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello, Data Table World!&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;});
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @returns {JSX.Element} Root element
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;App&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;TableComponent&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;_mockDataTable&lt;/span&gt;} /&amp;gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;допустим-а-можешь-пожалуйста-пояснить-что-тут-вообще-за-движ-происходит&#34;&gt;Допустим. А можешь, пожалуйста, пояснить, что тут вообще за движ происходит?&lt;/h4&gt;
+</content>
+    </item>
+    
+  </channel>
+</rss>

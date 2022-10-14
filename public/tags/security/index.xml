@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>security on </title>
+    <link>https://oneeyed1366.github.io/blog/tags/security/</link>
+    <description>Recent content in security on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ru</language>
+    <lastBuildDate>Mon, 10 Oct 2022 08:52:39 +0300</lastBuildDate><atom:link href="https://oneeyed1366.github.io/blog/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Мозги на прокачку: безопасники, XSS и при чем тут формочки</title>
+      <link>https://oneeyed1366.github.io/blog/posts/2022-10-10-js-interviews-1/</link>
+      <pubDate>Mon, 10 Oct 2022 08:52:39 +0300</pubDate>
+      
+      <guid>https://oneeyed1366.github.io/blog/posts/2022-10-10-js-interviews-1/</guid>
+      <description>Что? XSS - это термин, описывающий вредоносный скриптинг на сайте путем внедрения JavaScript кода в тех частях пользовательского интерфейса, которые предварительно не проверяются разработчиком
+Как? Это возможно из-за особенностей работы JS движков внутри браузера.
+Если точнее, то движок, по сути, парсит скрипты из обычного текста, а значит - ему до фонаря, откуда этот скрипт появился.
+А поточнее? Идея заключается в том, чтобы обходными путями добавить в приложение код, который изначально не был предусмотрен разработчиками.</description>
+      <content>&lt;h2 id=&#34;что&#34;&gt;Что?&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;XSS&lt;/code&gt; - это термин, описывающий вредоносный скриптинг на сайте
+путем &lt;code&gt;внедрения JavaScript&lt;/code&gt; кода в тех частях пользовательского интерфейса,
+которые предварительно &lt;code&gt;не проверяются разработчиком&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;как&#34;&gt;Как?&lt;/h2&gt;
+&lt;p&gt;Это &lt;code&gt;возможно из-за особенностей работы JS движков внутри браузера&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Если точнее, то &lt;code&gt;движок&lt;/code&gt;, по сути, &lt;code&gt;парсит скрипты из обычного текста&lt;/code&gt;, а значит -
+ему до фонаря, откуда этот скрипт появился.&lt;/p&gt;
+&lt;h2 id=&#34;а-поточнее&#34;&gt;А поточнее?&lt;/h2&gt;
+&lt;p&gt;Идея заключается в том, чтобы обходными путями добавить в приложение код,
+который изначально не был предусмотрен разработчиками.&lt;/p&gt;
+&lt;h3 id=&#34;допустим-через-_ссылки_&#34;&gt;Допустим, через &lt;em&gt;ссылки&lt;/em&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-jsx&#34; data-lang=&#34;jsx&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;unsecuredInputId&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;unsecured-input_id&amp;#34;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/** @type {[string, (data: string) =&amp;gt; void]} */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; [&lt;span style=&#34;color:#a6e22e&#34;&gt;state&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;setState&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;useState&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onInputChange&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;el&lt;/span&gt; =&amp;gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;setState&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;el&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;target&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;someClassName&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;label&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;htmlFor&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;unsecuredInputId&lt;/span&gt;}&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;input&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;unsecuredInputId&lt;/span&gt;} /&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;label&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;href&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;state&lt;/span&gt;} &lt;span style=&#34;color:#a6e22e&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;socialMediaLink&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;Social&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Media&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Link&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;a&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;и-шо-ж-в-этом-плохого&#34;&gt;И шо-ж в этом плохого??&lt;/h4&gt;
+&lt;p&gt;Допустим, &lt;code&gt;кулХацкер&lt;/code&gt; введёт в радостно отрисованный ему input вот такую конструкцию
+(&amp;ldquo;Cовершенно случайно&amp;rdquo;)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;javascript&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;alert&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello, Hacker World!&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;В таком случае, после ввода данных может оказаться неприятная ситуация:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;кулХацкер&lt;/code&gt; создал профиль с вот такой ссылкой (например, якобы на аккаунт ВК)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Невинный пользователь&lt;/code&gt;, который хочет в личном письме высказать кулХацкеру, где он не прав,
+ничего не подозревая тыкает, докустим, на иконку, дабы перейти по ссылке&lt;/li&gt;
+&lt;li&gt;Вместо заветной странички обидчика, недоумевающий пользователь &lt;code&gt;видит alert&lt;/code&gt;
+с сообщением &amp;ldquo;Hello, Hacker World&amp;rdquo;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Готово, вы великолепны (и, собсна, уволены)&lt;/p&gt;
+&lt;h3 id=&#34;допустим-через-_dangerouslysetinnerhtml_&#34;&gt;Допустим, через &lt;em&gt;dangerouslySetInnerHTML&lt;/em&gt;&lt;/h3&gt;
+&lt;h4 id=&#34;оффтоп&#34;&gt;Оффтоп&lt;/h4&gt;
+&lt;p&gt;Видел в паре проектов выставление иконок таким способом, особеннно -
+если они получались откуда-то с сервера, и потом парсились в текст.&lt;/p&gt;
+&lt;p&gt;Если &lt;code&gt;Вы&lt;/code&gt; с таким &lt;code&gt;не сталкивались&lt;/code&gt; - &lt;code&gt;круто&lt;/code&gt;, вам повезло.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-jsx&#34; data-lang=&#34;jsx&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/** @type {[string, (data: string) =&amp;gt; void]} */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; [&lt;span style=&#34;color:#a6e22e&#34;&gt;innerHtml&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;setInnerHtml&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;useState&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onGetSvgFromApi&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; () =&amp;gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;axios&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    .&lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;process&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;env&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;REACT_APP_API_URL&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/some-endpoint&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    .&lt;span style=&#34;color:#a6e22e&#34;&gt;then&lt;/span&gt;(({ &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt; }) =&amp;gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;setInnerHtml&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    })
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    .&lt;span style=&#34;color:#66d9ef&#34;&gt;catch&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;error&lt;/span&gt; =&amp;gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;error&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;error&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    });
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;someClassName&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;button&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;button&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onClick&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;onGetSvgFromApi&lt;/span&gt;}&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;Получить&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;SVG&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;иконку&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;с&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;сервера&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;button&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;some-social-media-container&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;dangerouslySetInnerHTML&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;{{ &lt;span style=&#34;color:#a6e22e&#34;&gt;__html&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;innerHtml&lt;/span&gt; }}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    /&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;и-шо-ж-в-этом-плохого-1&#34;&gt;И шо-ж в этом плохого??&lt;/h4&gt;
+&lt;p&gt;Допустим, &lt;code&gt;кулХацкер №2&lt;/code&gt; (поскольку у вас &lt;code&gt;нет SSL сертификата&lt;/code&gt;) как &lt;code&gt;man-in-the-middle&lt;/code&gt;
+перехватил данные, которые летят с вашего сервака, и теперь &lt;code&gt;шлёт&lt;/code&gt; в ответе
+&lt;code&gt;не SVG&#39;шку&lt;/code&gt;, а&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;script&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;alert&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello, Hacker World!&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;script&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;При таком раскладе, поскольку вы &lt;code&gt;используете dangerouslySetInnerHTML&lt;/code&gt;,
+то браузер превратит этот ответ в элемент DOM-дерева, а значит - Пам-Пам.&lt;/p&gt;
+&lt;p&gt;Да-да, все верно. &lt;code&gt;JavaScript движок&lt;/code&gt;, увидя не обработанный скрипт,
+&lt;code&gt;со спокойной браузерной душой выполнит все&lt;/code&gt;, что отправил ему &lt;code&gt;кулХацкер №2&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Итог? Вы очешуенны (и снова уволены)&lt;/p&gt;
+&lt;h2 id=&#34;вредные-советы&#34;&gt;Вредные советы&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Никогда не &lt;code&gt;ВАЛИДИРУЙТЕ&lt;/code&gt; то, &lt;code&gt;ЧТО ВВОДИТ ПОЛЬЗОВАТЕЛЬ&lt;/code&gt;. Серьезно,
+нафига тратить время на такую глупую штуку, когда можно по****ить
+на себя в зеркале?&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Никогда не &lt;code&gt;УСТАНАВЛИВАЙТЕ SSL-СЕРТИФИКАТ&lt;/code&gt;, ибо нафига - у вас же User
+никогда ничего в Web-Приложухе не делает. Так зачем заморачиваться??&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Никогда не &lt;code&gt;СЛЕДИТЕ ЗА dangerouslySetInnerHTML&lt;/code&gt;, ибо - нафига?
+Все работает-же, значит можно заняться более важными делами (например из &lt;code&gt;ПУНКТА №1&lt;/code&gt;)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    </item>
+    
+  </channel>
+</rss>

@@ -37,27 +37,18 @@ defaultContentLanguageInSubdir = true
 
   Toc = true # default
 
-  # set title for the table of contents
-  # can be overridden in a page's front-matter
-  # TocTitle = "Table of Contents" # default
-
-
   [params.logo]
-    logoText = "pseudo:Blog"
+    logoText = "pseudo::Blog"
     logoHomeLink = "posts"
-
-  [params.twitter]
-    creator = ""
-    site = ""
 
 [menu]
   [[menu.main]]
     identifier = "config-menu-about-blog"
-    name = "About"
+    name = "О блоге"
     url = "about/blog"
   [[menu.main]]
     identifier = "config-menu-about-me"
-    name = "About"
+    name = "Об авторе"
     url = "about/me"
   [[menu.main]]
     identifier = "config-menu-tags"

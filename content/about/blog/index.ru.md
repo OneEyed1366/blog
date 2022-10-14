@@ -1,5 +1,5 @@
 ---
-title: "Что за 'псевдо:Блог' вообще?"
+title: "Что за 'pseudo::Blog' вообще?"
 draft: false
 toc: false
 ---

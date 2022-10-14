@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title></title>
+    <link>https://oneeyed1366.github.io/blog/</link>
+    <description>Recent content on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ru</language>
+    <lastBuildDate>Wed, 12 Oct 2022 14:45:00 +0300</lastBuildDate><atom:link href="https://oneeyed1366.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Въетнамские флэшбэки: Девичья память у React&#39;а (и немножко DotNotation)</title>
+      <link>https://oneeyed1366.github.io/blog/posts/2022-10-12-react-interviews-1/</link>
+      <pubDate>Wed, 12 Oct 2022 14:45:00 +0300</pubDate>
+      
+      <guid>https://oneeyed1366.github.io/blog/posts/2022-10-12-react-interviews-1/</guid>
+      <description>Оффтоп Крутые-модные-молодежные Svelte&amp;rsquo;ы, Solid&amp;rsquo;ы, Qwik&amp;rsquo;и и прочее сегодня не рассматриваем, ибо каждый из них топит за свою идеологию и способ работы.
+Мы тут сегодня про &amp;ldquo;старпёров&amp;rdquo; (слышит голос вдалеке: &amp;ldquo;Ма, неси таблетки, деда снова накрыло&amp;rdquo;)
+Про что поговорим? Про оптимизацию и профилирование компонентов (и немножко о react&#39;овском геморрое) Про оптимизацию Одна из главных &amp;quot;фишек&amp;quot; React&#39;а по сравнению с Angular &amp;amp; Vue, это возможность достаточно тонко управлять процессом рендеринга UI в Web-Приложении (клеит на React ярлычок &amp;ldquo;Fedora&amp;rdquo;, Vue - &amp;ldquo;MacOSX Mountain Lion&amp;rdquo;, а на Angular - &amp;ldquo;Windows 10 for Business&amp;rdquo;)</description>
+      <content>&lt;hr&gt;
+&lt;h2 id=&#34;оффтоп&#34;&gt;Оффтоп&lt;/h2&gt;
+&lt;p&gt;Крутые-модные-молодежные &lt;em&gt;Svelte&amp;rsquo;ы&lt;/em&gt;, &lt;em&gt;Solid&amp;rsquo;ы&lt;/em&gt;, &lt;em&gt;Qwik&amp;rsquo;и&lt;/em&gt; и прочее
+сегодня не рассматриваем, ибо каждый из них топит за свою идеологию и способ
+работы.&lt;/p&gt;
+&lt;p&gt;Мы тут сегодня про &amp;ldquo;старпёров&amp;rdquo;
+(&lt;em&gt;слышит голос вдалеке&lt;/em&gt;: &amp;ldquo;Ма, неси таблетки, деда снова накрыло&amp;rdquo;)&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;про-что-поговорим&#34;&gt;Про что поговорим?&lt;/h2&gt;
+&lt;p&gt;Про &lt;code&gt;оптимизацию&lt;/code&gt; и &lt;code&gt;профилирование компонентов&lt;/code&gt;
+&lt;del class=&#34;del&#34;&gt;
+  (и немножко о react&#39;овском геморрое)
+&lt;/del&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;про-оптимизацию&#34;&gt;Про оптимизацию&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;Одна из&lt;/code&gt; главных &lt;code&gt;&amp;quot;фишек&amp;quot; React&#39;а&lt;/code&gt; по сравнению с &lt;em&gt;Angular&lt;/em&gt; &amp;amp; &lt;em&gt;Vue&lt;/em&gt;,
+&lt;code&gt;это возможность&lt;/code&gt; достаточно &lt;code&gt;тонко управлять процессом рендеринга&lt;/code&gt;
+UI в Web-Приложении
+(клеит на React ярлычок &amp;ldquo;Fedora&amp;rdquo;, Vue - &amp;ldquo;MacOSX Mountain Lion&amp;rdquo;,
+а на Angular - &amp;ldquo;Windows 10 for Business&amp;rdquo;)&lt;/p&gt;
+&lt;p&gt;Если точнее, то я сейчас говорю про то, &lt;code&gt;как React понимает&lt;/code&gt;,
+&lt;code&gt;что&lt;/code&gt; ему &lt;code&gt;пора работать и как&lt;/code&gt; мы можем &lt;code&gt;этим&lt;/code&gt; процессом &lt;code&gt;управлять&lt;/code&gt;.
+(&lt;em&gt;Внутренний голос&lt;/em&gt;: &amp;ldquo;а не балду гонять, ваяя постики в блог.&amp;rdquo; -&lt;em&gt;Задумался&lt;/em&gt;-)&lt;/p&gt;
+&lt;h4 id=&#34;и-и-и&#34;&gt;И-и-и???&lt;/h4&gt;
+&lt;p&gt;На самом деле, React проповедует достаточно простую, но эффективную идеологию
+&lt;code&gt;однонаправленного потока данных&lt;/code&gt; (о как звучит! Да-да, совсем накрыло)&lt;/p&gt;
+&lt;p&gt;Обычно о ней говорят в контексте работы с реактивностью, но свою &amp;ldquo;лепту&amp;rdquo; в
+отрисовку компонентов это тоже привносит
+(И, забегая вперед, не всегда очевидную, но прям существенную).&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h4 id=&#34;спектакль-в-2-действиях&#34;&gt;Спектакль в 2 действиях&lt;/h4&gt;
+&lt;p&gt;Давайте представим, что бизнес врывается с ноги в dev-team чат, и такой:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;(Б - Бизнес) НАМ нужен ДАШБОРД!&lt;/li&gt;
+&lt;li&gt;(Р - Какой-то разраб) Ну ок, нужен и нужен. (косит под дурака) Мы-то тут причём??&lt;/li&gt;
+&lt;li&gt;(Л - ТехЛид) А накиньте контекста: что хотите показывать, для кого делаем, что по эстимейтам, &amp;hellip;?&lt;/li&gt;
+&lt;li&gt;(Б) Большой ДАШБОРД! Чтобы там как только мы в админке что-то поменяли, сразу
+рисовалось тут! И чтобы графики моментально были! Столбчатые! Нет, даже Ленточные!
+Даже оба сразу, и чтобы не лагало! Вообще! Сделаете???&lt;/li&gt;
+&lt;li&gt;(Л) Ну, в принципе, понятно.
+Давайте соберемся на созвон, обсудим возможные риски и приоритеты
+в соответствии с уже имеющимися задачами.&lt;/li&gt;
+&lt;li&gt;(Б) ОК! Завтра, в течение дня!&lt;/li&gt;
+&lt;li&gt;(Л) Ок.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Бизнес уходит, просыпается (&lt;em&gt;мафия&lt;/em&gt;) dev-team&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;(Л) Народ, вангую, что нас припашут ваять аналог AgGrid, но чисто свой,
+и чтобы с плюшками.&lt;/li&gt;
+&lt;li&gt;(Р) А в чём проблема взять AgGrid?&lt;/li&gt;
+&lt;li&gt;(Л) Скорее всего, в лицензии, ибо тут бизнес, возможно, захочет собирать
+стату по какому-то внутреннему проекту, для которого бюджета кот наплакал.
+Ну или просто показать CEO с СТО, за что мы свой хлеб едим. Андрюха?&lt;/li&gt;
+&lt;li&gt;(А - Андрюха) (отвлекается от просмотра боя в Dear Or Alive: Paradise) А??&lt;/li&gt;
+&lt;li&gt;(Л) Короче, скорее всего в тебя прилетит таска: сваять таблицу, пока просто -
+без графиков. Так, чтобы там бодро рисовалось, но чтобы не выжирало батарейку
+у ноута в ноль за полминуты. Прям супер производительность пока не нужна, но лучше на начальном
+этапе потратить чутка времени на оптимизацию. Потянешь?&lt;/li&gt;
+&lt;li&gt;(Р) ОптЕмизацию&lt;/li&gt;
+&lt;li&gt;(Л) Ага, спс. Кстати, как там тесты? Написал?&lt;/li&gt;
+&lt;li&gt;(Р) (исчез из-за &amp;ldquo;внезапно&amp;rdquo; появившихся проблем с сетью)&lt;/li&gt;
+&lt;li&gt;(Л) Так, Андрюх - ты пока поизучай доку по рендерингу реакта, и сделай прототип.
+Ну, допустим, с 2000 строк. Чисто &amp;ldquo;Hello, world!&amp;rdquo; в каждой.
+Если что - пингуй, я подскажу&lt;/li&gt;
+&lt;li&gt;(А) (кивает, но вообще ни в зуб ногой, чё от него хотят, ибо всю ночь гонял в &amp;ldquo;танки&amp;rdquo;)
+Ага, принял. Сделаю&lt;/li&gt;
+&lt;li&gt;(Л) Ну и ладушки. Поехали&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;код-в-студию&#34;&gt;Код в студию!&lt;/h4&gt;
+&lt;p&gt;А теперь давайте немного о суровом кодерском.&lt;/p&gt;
+&lt;p&gt;Допустим, условный &amp;ldquo;Андрюха&amp;rdquo; проспался, и прямо перед дейликом накидал
+что-то подобное:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-ts&#34; data-lang=&#34;ts&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// types/table.d.ts
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; { &lt;span style=&#34;color:#a6e22e&#34;&gt;HTMLAttributes&lt;/span&gt; } &lt;span style=&#34;color:#66d9ef&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;react&amp;#34;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;IDataTable&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;columng&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;rows&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;[];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ITableComponentProps&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Partial&lt;/span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;HTMLAttributes&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;HTMLDivElement&lt;/span&gt;&amp;gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;header&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;IDataTable&lt;/span&gt;[];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-jsx&#34; data-lang=&#34;jsx&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// TableComponent.jsx
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @returns {JSX.Element} Cool table Component
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; *
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @param {import(&amp;#34;types/table&amp;#34;).ITableComponentProps} props
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;TableComponent&lt;/span&gt;({ &lt;span style=&#34;color:#a6e22e&#34;&gt;header&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [], ...&lt;span style=&#34;color:#a6e22e&#34;&gt;divAttrs&lt;/span&gt; }) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;computedTableColumnRows&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;useCallback&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;rows&lt;/span&gt; =&amp;gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;rows&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;map&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;row&lt;/span&gt; =&amp;gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;table__body__column__row&amp;#34;&lt;/span&gt;&amp;gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;row&lt;/span&gt;}&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ));
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    },
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    [&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  );
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;computedTableBody&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;useMemo&lt;/span&gt;(() =&amp;gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;length&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;table__body__no-data&amp;#34;&lt;/span&gt;&amp;gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;No&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Data&lt;/span&gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &amp;lt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        {&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;map&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;item&lt;/span&gt; =&amp;gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &amp;lt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;table__body__column__header&amp;#34;&lt;/span&gt;&amp;gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;item&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;column&lt;/span&gt;}&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            {&lt;span style=&#34;color:#a6e22e&#34;&gt;computedTableColumnRows&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;item&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;rows&lt;/span&gt;)}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &amp;lt;/&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ))}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &amp;lt;/&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    );
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }, [&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;]);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; {&lt;span style=&#34;color:#a6e22e&#34;&gt;...divAttrs&lt;/span&gt;}&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;table__header&amp;#34;&lt;/span&gt;&amp;gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;header&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Default table name&amp;#34;&lt;/span&gt;}&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;table__body&amp;#34;&lt;/span&gt;&amp;gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;computedTableBody&lt;/span&gt;}&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  );
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;TableComponent&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Variants&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;Memoized&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;memo&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;TableComponent&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;Async&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;async&lt;/span&gt;(() =&amp;gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.&amp;#34;&lt;/span&gt;)),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;AsyncMemoized&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;memo&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;async&lt;/span&gt;(() =&amp;gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.&amp;#34;&lt;/span&gt;)))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;default&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;TableComponent&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-jsx&#34; data-lang=&#34;jsx&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// root.jsx
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/** @type {import(&amp;#34;types/table&amp;#34;).IDataTable[]} */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;_mockDataTable&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Array(&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;fill&lt;/span&gt;({
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;column&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Some column header&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;rows&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Array(&lt;span style=&#34;color:#ae81ff&#34;&gt;500&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;fill&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello, Data Table World!&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;});
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @returns {JSX.Element} Root element
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;App&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;TableComponent&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;_mockDataTable&lt;/span&gt;} /&amp;gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;допустим-а-можешь-пожалуйста-пояснить-что-тут-вообще-за-движ-происходит&#34;&gt;Допустим. А можешь, пожалуйста, пояснить, что тут вообще за движ происходит?&lt;/h4&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>Мозги на прокачку: асинхронная синхронность или &#39;работа в темпе вальса&#39;</title>
+      <link>https://oneeyed1366.github.io/blog/posts/2022-10-10-js-interviews-2/</link>
+      <pubDate>Mon, 10 Oct 2022 21:12:57 +0300</pubDate>
+      
+      <guid>https://oneeyed1366.github.io/blog/posts/2022-10-10-js-interviews-2/</guid>
+      <description>Что? Асинхронность в JavaScript - это способность исполнять команды, не блокируя взаимодействие с приложением
+Как? Это возможно благодаря тому, что JavaScript, хоть он и &amp;ldquo;как-бы-однопоточный&amp;rdquo; (Web-Worker&amp;rsquo;ы - привет!), имеет под капотом не только себя любимого, но и, например, Web API. Или V8.
+А поточнее? Идея в том, что чтобы улучшить UserExperience, не нужно забирать у пользователя возможность взаимодействия с Web-Приложением.
+Например, давайте представим, что у нас есть Word.
+Вы хотите добавить в ваш Word&amp;rsquo;овский документ таблицу, допустим, с 2000 строк.</description>
+      <content>&lt;h2 id=&#34;что&#34;&gt;Что?&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;Асинхронность&lt;/code&gt; в JavaScript - это
+&lt;code&gt;способность исполнять команды, не блокируя взаимодействие&lt;/code&gt; с приложением&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;как&#34;&gt;Как?&lt;/h2&gt;
+&lt;p&gt;Это возможно благодаря тому, что JavaScript, хоть он и &amp;ldquo;как-бы-однопоточный&amp;rdquo;
+(&lt;a href=&#34;https://developer.mozilla.org/ru/docs/Web/API/Web_Workers_API/Using_web_workers&#34;&gt;Web-Worker&amp;rsquo;ы&lt;/a&gt; - привет!),
+имеет &lt;code&gt;под капотом не только себя&lt;/code&gt; любимого, &lt;code&gt;но и&lt;/code&gt;, например, &lt;code&gt;Web API&lt;/code&gt;.
+&lt;code&gt;Или V8&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;а-поточнее&#34;&gt;А поточнее?&lt;/h2&gt;
+&lt;p&gt;Идея в том, что чтобы &lt;code&gt;улучшить UserExperience, не нужно забирать&lt;/code&gt; у пользователя
+&lt;code&gt;возможность взаимодействия&lt;/code&gt; с Web-Приложением.&lt;/p&gt;
+&lt;p&gt;Например, давайте представим, что у нас есть Word.&lt;/p&gt;
+&lt;p&gt;Вы хотите добавить в ваш Word&amp;rsquo;овский документ таблицу, допустим, с 2000 строк.&lt;/p&gt;
+&lt;p&gt;Поскольку законы физики никто не отменял, а закон Мура в последнее время
+начинает &amp;ldquo;подбуксовывать&amp;rdquo;, то давайте представим вот такой пример:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-ts&#34; data-lang=&#34;ts&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// table.d.ts
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;IDataTable&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;columng&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;rows&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;[];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;IProps&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;header&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;IDataTable&lt;/span&gt;[];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-jsx&#34; data-lang=&#34;jsx&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// TableComponent.jsx
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @returns {JSX.Element} Cool table Component
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; *
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @param {import(&amp;#34;table&amp;#34;).IProps &amp;amp; import(&amp;#34;react&amp;#34;).HTMLAttributes&amp;lt;HTMLDivElement&amp;gt;} props
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;TableComponent&lt;/span&gt;({ &lt;span style=&#34;color:#a6e22e&#34;&gt;header&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;, ...&lt;span style=&#34;color:#a6e22e&#34;&gt;divProps&lt;/span&gt; }) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;computedTableColumnRows&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;useCallback&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;rows&lt;/span&gt; =&amp;gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;rows&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;map&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;row&lt;/span&gt; =&amp;gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;table__body__column__row&amp;#34;&lt;/span&gt;&amp;gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;row&lt;/span&gt;}&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ));
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    },
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    [&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  );
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;computedTableBody&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;useMemo&lt;/span&gt;(() =&amp;gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;length&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;table__body__no-data&amp;#34;&lt;/span&gt;&amp;gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;No&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Data&lt;/span&gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &amp;lt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        {&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;map&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;item&lt;/span&gt; =&amp;gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &amp;lt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;table__body__column__header&amp;#34;&lt;/span&gt;&amp;gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;item&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;column&lt;/span&gt;}&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            {&lt;span style=&#34;color:#a6e22e&#34;&gt;computedTableColumnRows&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;item&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;rows&lt;/span&gt;)}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &amp;lt;/&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ))}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &amp;lt;/&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    );
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }, [&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;]);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; {&lt;span style=&#34;color:#a6e22e&#34;&gt;...divProps&lt;/span&gt;}&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;table__header&amp;#34;&lt;/span&gt;&amp;gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;header&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Default table name&amp;#34;&lt;/span&gt;}&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;table__body&amp;#34;&lt;/span&gt;&amp;gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;computedTableBody&lt;/span&gt;}&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  );
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;TableComponent&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Variants&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;Memoized&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;memo&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;TableComponent&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;Async&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;async&lt;/span&gt;(() =&amp;gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.&amp;#34;&lt;/span&gt;)),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;AsyncMemoized&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;memo&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;async&lt;/span&gt;(() =&amp;gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.&amp;#34;&lt;/span&gt;)))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;default&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;TableComponent&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-jsx&#34; data-lang=&#34;jsx&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// root.jsx
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/** @type {import(&amp;#34;table&amp;#34;).IDataTable[]} */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;_mockDataTable&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Array(&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;fill&lt;/span&gt;({
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;column&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Some column header&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;rows&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Array(&lt;span style=&#34;color:#ae81ff&#34;&gt;500&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;fill&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello, Data Table World!&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;});
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @returns {JSX.Element} Root element
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;App&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;TableComponent&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;_mockDataTable&lt;/span&gt;} /&amp;gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;допустим-через-_макротаски_&#34;&gt;Допустим, через &lt;em&gt;макротаски&lt;/em&gt;&lt;/h3&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>Мозги на прокачку: безопасники, XSS и при чем тут формочки</title>
+      <link>https://oneeyed1366.github.io/blog/posts/2022-10-10-js-interviews-1/</link>
+      <pubDate>Mon, 10 Oct 2022 08:52:39 +0300</pubDate>
+      
+      <guid>https://oneeyed1366.github.io/blog/posts/2022-10-10-js-interviews-1/</guid>
+      <description>Что? XSS - это термин, описывающий вредоносный скриптинг на сайте путем внедрения JavaScript кода в тех частях пользовательского интерфейса, которые предварительно не проверяются разработчиком
+Как? Это возможно из-за особенностей работы JS движков внутри браузера.
+Если точнее, то движок, по сути, парсит скрипты из обычного текста, а значит - ему до фонаря, откуда этот скрипт появился.
+А поточнее? Идея заключается в том, чтобы обходными путями добавить в приложение код, который изначально не был предусмотрен разработчиками.</description>
+      <content>&lt;h2 id=&#34;что&#34;&gt;Что?&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;XSS&lt;/code&gt; - это термин, описывающий вредоносный скриптинг на сайте
+путем &lt;code&gt;внедрения JavaScript&lt;/code&gt; кода в тех частях пользовательского интерфейса,
+которые предварительно &lt;code&gt;не проверяются разработчиком&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;как&#34;&gt;Как?&lt;/h2&gt;
+&lt;p&gt;Это &lt;code&gt;возможно из-за особенностей работы JS движков внутри браузера&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Если точнее, то &lt;code&gt;движок&lt;/code&gt;, по сути, &lt;code&gt;парсит скрипты из обычного текста&lt;/code&gt;, а значит -
+ему до фонаря, откуда этот скрипт появился.&lt;/p&gt;
+&lt;h2 id=&#34;а-поточнее&#34;&gt;А поточнее?&lt;/h2&gt;
+&lt;p&gt;Идея заключается в том, чтобы обходными путями добавить в приложение код,
+который изначально не был предусмотрен разработчиками.&lt;/p&gt;
+&lt;h3 id=&#34;допустим-через-_ссылки_&#34;&gt;Допустим, через &lt;em&gt;ссылки&lt;/em&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-jsx&#34; data-lang=&#34;jsx&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;unsecuredInputId&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;unsecured-input_id&amp;#34;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/** @type {[string, (data: string) =&amp;gt; void]} */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; [&lt;span style=&#34;color:#a6e22e&#34;&gt;state&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;setState&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;useState&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onInputChange&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;el&lt;/span&gt; =&amp;gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;setState&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;el&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;target&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;someClassName&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;label&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;htmlFor&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;unsecuredInputId&lt;/span&gt;}&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;input&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;unsecuredInputId&lt;/span&gt;} /&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;label&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;href&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;state&lt;/span&gt;} &lt;span style=&#34;color:#a6e22e&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;socialMediaLink&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;Social&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Media&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Link&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;a&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;и-шо-ж-в-этом-плохого&#34;&gt;И шо-ж в этом плохого??&lt;/h4&gt;
+&lt;p&gt;Допустим, &lt;code&gt;кулХацкер&lt;/code&gt; введёт в радостно отрисованный ему input вот такую конструкцию
+(&amp;ldquo;Cовершенно случайно&amp;rdquo;)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;javascript&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;alert&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello, Hacker World!&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;В таком случае, после ввода данных может оказаться неприятная ситуация:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;кулХацкер&lt;/code&gt; создал профиль с вот такой ссылкой (например, якобы на аккаунт ВК)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Невинный пользователь&lt;/code&gt;, который хочет в личном письме высказать кулХацкеру, где он не прав,
+ничего не подозревая тыкает, докустим, на иконку, дабы перейти по ссылке&lt;/li&gt;
+&lt;li&gt;Вместо заветной странички обидчика, недоумевающий пользователь &lt;code&gt;видит alert&lt;/code&gt;
+с сообщением &amp;ldquo;Hello, Hacker World&amp;rdquo;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Готово, вы великолепны (и, собсна, уволены)&lt;/p&gt;
+&lt;h3 id=&#34;допустим-через-_dangerouslysetinnerhtml_&#34;&gt;Допустим, через &lt;em&gt;dangerouslySetInnerHTML&lt;/em&gt;&lt;/h3&gt;
+&lt;h4 id=&#34;оффтоп&#34;&gt;Оффтоп&lt;/h4&gt;
+&lt;p&gt;Видел в паре проектов выставление иконок таким способом, особеннно -
+если они получались откуда-то с сервера, и потом парсились в текст.&lt;/p&gt;
+&lt;p&gt;Если &lt;code&gt;Вы&lt;/code&gt; с таким &lt;code&gt;не сталкивались&lt;/code&gt; - &lt;code&gt;круто&lt;/code&gt;, вам повезло.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-jsx&#34; data-lang=&#34;jsx&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/** @type {[string, (data: string) =&amp;gt; void]} */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; [&lt;span style=&#34;color:#a6e22e&#34;&gt;innerHtml&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;setInnerHtml&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;useState&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onGetSvgFromApi&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; () =&amp;gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;axios&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    .&lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;process&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;env&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;REACT_APP_API_URL&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/some-endpoint&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    .&lt;span style=&#34;color:#a6e22e&#34;&gt;then&lt;/span&gt;(({ &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt; }) =&amp;gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;setInnerHtml&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    })
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    .&lt;span style=&#34;color:#66d9ef&#34;&gt;catch&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;error&lt;/span&gt; =&amp;gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;error&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;error&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    });
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;className&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;someClassName&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;button&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;button&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onClick&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;onGetSvgFromApi&lt;/span&gt;}&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;Получить&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;SVG&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;иконку&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;с&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;сервера&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;button&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;some-social-media-container&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;dangerouslySetInnerHTML&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;{{ &lt;span style=&#34;color:#a6e22e&#34;&gt;__html&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;innerHtml&lt;/span&gt; }}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    /&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;и-шо-ж-в-этом-плохого-1&#34;&gt;И шо-ж в этом плохого??&lt;/h4&gt;
+&lt;p&gt;Допустим, &lt;code&gt;кулХацкер №2&lt;/code&gt; (поскольку у вас &lt;code&gt;нет SSL сертификата&lt;/code&gt;) как &lt;code&gt;man-in-the-middle&lt;/code&gt;
+перехватил данные, которые летят с вашего сервака, и теперь &lt;code&gt;шлёт&lt;/code&gt; в ответе
+&lt;code&gt;не SVG&#39;шку&lt;/code&gt;, а&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;script&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;alert&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello, Hacker World!&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;script&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;При таком раскладе, поскольку вы &lt;code&gt;используете dangerouslySetInnerHTML&lt;/code&gt;,
+то браузер превратит этот ответ в элемент DOM-дерева, а значит - Пам-Пам.&lt;/p&gt;
+&lt;p&gt;Да-да, все верно. &lt;code&gt;JavaScript движок&lt;/code&gt;, увидя не обработанный скрипт,
+&lt;code&gt;со спокойной браузерной душой выполнит все&lt;/code&gt;, что отправил ему &lt;code&gt;кулХацкер №2&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Итог? Вы очешуенны (и снова уволены)&lt;/p&gt;
+&lt;h2 id=&#34;вредные-советы&#34;&gt;Вредные советы&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Никогда не &lt;code&gt;ВАЛИДИРУЙТЕ&lt;/code&gt; то, &lt;code&gt;ЧТО ВВОДИТ ПОЛЬЗОВАТЕЛЬ&lt;/code&gt;. Серьезно,
+нафига тратить время на такую глупую штуку, когда можно по****ить
+на себя в зеркале?&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Никогда не &lt;code&gt;УСТАНАВЛИВАЙТЕ SSL-СЕРТИФИКАТ&lt;/code&gt;, ибо нафига - у вас же User
+никогда ничего в Web-Приложухе не делает. Так зачем заморачиваться??&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Никогда не &lt;code&gt;СЛЕДИТЕ ЗА dangerouslySetInnerHTML&lt;/code&gt;, ибо - нафига?
+Все работает-же, значит можно заняться более важными делами (например из &lt;code&gt;ПУНКТА №1&lt;/code&gt;)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>Как подселить кота к коту, и не стать алкоголиком</title>
+      <link>https://oneeyed1366.github.io/blog/posts/2022-10-10-cats-and-how-to-survive-with-them/</link>
+      <pubDate>Mon, 10 Oct 2022 06:23:40 +0300</pubDate>
+      
+      <guid>https://oneeyed1366.github.io/blog/posts/2022-10-10-cats-and-how-to-survive-with-them/</guid>
+      <description>Это не я! Он сам пришел! (Мяв) </description>
+      <content>&lt;h2 id=&#34;это-не-я-он-сам-пришел-мяв&#34;&gt;Это не я! Он сам пришел! (Мяв)&lt;/h2&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>По поводу тестирования...</title>
+      <link>https://oneeyed1366.github.io/blog/posts/2022-10-07-thoughts-about-tests/</link>
+      <pubDate>Fri, 07 Oct 2022 18:05:41 +0300</pubDate>
+      
+      <guid>https://oneeyed1366.github.io/blog/posts/2022-10-07-thoughts-about-tests/</guid>
+      <description>Тесты есть? А если найду?? Рано или поздно каждый разраб слышит фразу: &amp;ldquo;Хороший код должен быть покрыт тестами&amp;rdquo;. И вроде бы все логично: чем сложнее приложение, тем сложнее контролировать все его нюансы и взаимосвязи.
+Значит, нужно &amp;ldquo;научить&amp;rdquo; какого-то исполнителя в вакууме тестировать то, что ты (или не ты) написал в своем СУПЕР-МЕГА-ПРИЛОЖЕНИИ-ЗА-ОВЕР-ДОХРЕНА-ДЕНЕГ-В-НАНОСЕКУНДУ!
+Ниже бегло рассмотрим пару-тройку сходу пришедших на ум инструментов (ибо разрабы, будучи людьми прогрессивными &amp;mdash;читать _ЛЕНИВЫМИ_&amp;mdash; уже придумали довольно много инструментов, которые позволяют эту проблему решить.</description>
+      <content>&lt;h2 id=&#34;тесты-есть-а-если-найду&#34;&gt;Тесты есть? А если найду??&lt;/h2&gt;
+&lt;p&gt;Рано или поздно каждый разраб слышит фразу: &amp;ldquo;Хороший код должен быть покрыт тестами&amp;rdquo;.
+И вроде бы все логично: чем сложнее приложение, тем сложнее контролировать все его нюансы и взаимосвязи.&lt;/p&gt;
+&lt;p&gt;Значит, нужно &amp;ldquo;научить&amp;rdquo; какого-то исполнителя в вакууме тестировать то, что ты (или не ты)
+написал в своем СУПЕР-МЕГА-ПРИЛОЖЕНИИ-ЗА-ОВЕР-ДОХРЕНА-ДЕНЕГ-В-НАНОСЕКУНДУ!&lt;/p&gt;
+&lt;p&gt;Ниже бегло рассмотрим пару-тройку сходу пришедших на ум инструментов
+(ибо разрабы, будучи людьми &lt;code&gt;прогрессивными&lt;/code&gt; &amp;mdash;читать &lt;code&gt;_ЛЕНИВЫМИ_&lt;/code&gt;&amp;mdash; уже придумали довольно
+много инструментов, которые позволяют эту проблему решить.)&lt;/p&gt;
+&lt;h3 id=&#34;список-костылей-карл-кос-ты-лей-инструментов-навскидку&#34;&gt;Список (&lt;strong&gt;Костылей, Карл. КОС-ТЫ-ЛЕЙ&lt;/strong&gt;) инструментов, навскидку&lt;/h3&gt;
+&lt;h4 id=&#34;jesthttpsjestjsio&#34;&gt;&lt;a href=&#34;https://jestjs.io/&#34;&gt;Jest&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Являясь одним из самых популярных инструментов для тестирования, негласно считается
+&amp;ldquo;королем&amp;rdquo; среди Enterprise-приложений (но это не точно)
+Применяется как для &lt;code&gt;Unit&lt;/code&gt;, так и для &lt;code&gt;Component&lt;/code&gt; тестирования.
+Можно применять и для &lt;code&gt;Интеграционного&lt;/code&gt; тестирования, но там уже &lt;code&gt;немножко больно&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;(
+Ловит въетнамские флэшбэки и вспоминает проекты, которые делали &lt;em&gt;E2E&lt;/em&gt; тесты на Jest&amp;rsquo;e&amp;hellip;
+&lt;strong&gt;Автор ушел пить кофе и рефлексировать, что раньше код был чище, а трава &amp;ndash; зеленей&lt;/strong&gt;
+)&lt;/p&gt;
+&lt;p&gt;Плюсы:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Легче интергрируется с &lt;a href=&#34;https://testing-library.com/docs/react-testing-library/intro/&#34;&gt;React-testing-library&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Хорошая дока, которая позволит тебе в моменте посмотреть, где и что ты не туда запихал&lt;/li&gt;
+&lt;li&gt;Jest - лапочка, который легко и непринужденно вливается в любой проект (Не то, что я. &lt;em&gt;ПЛАЧЕТ&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;Довольно шустро крутит (твои планы на пятничный вечер) все, что ты в него запихаешь&lt;/li&gt;
+&lt;li&gt;Имеет богатую экосистему плагинов и расширений практически* под любой framework&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Минусы:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Шаг влево\вправо - расстрел&amp;rdquo;
+(иногда банально настроить &lt;em&gt;pre-commit&lt;/em&gt; - целый квест со случайно выпадающими гачи-микс сценами)&lt;/li&gt;
+&lt;li&gt;Е**нутая логика итерации по массиву&lt;/li&gt;
+&lt;li&gt;Залез в конфиги - пеняй на себя (особенно, если ты вообще не сечёшь, что и НАФИГА ты делаешь)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;mochahttpsmochajsorg--chaihttpswwwchaijscom&#34;&gt;&lt;a href=&#34;https://mochajs.org/&#34;&gt;Mocha&lt;/a&gt; + &lt;a href=&#34;https://www.chaijs.com/&#34;&gt;Chai&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;&amp;ldquo;Бонни и Клайд&amp;rdquo; в мире тестирования Web SPA приложений.
+Долго и упорно наступают на пятки &amp;ldquo;мастодонту&amp;rdquo; в лице Jest&amp;rsquo;а.&lt;/p&gt;
+&lt;p&gt;Применяются также для &lt;code&gt;Unit&lt;/code&gt;, &lt;code&gt;Component&lt;/code&gt; &amp;amp; &lt;code&gt;Интеграционного&lt;/code&gt; тестирования.&lt;/p&gt;
+&lt;p&gt;Большой плюс: &lt;em&gt;Интеграционное&lt;/em&gt; тестирование легче масштабируется
+(понятный большинству пример: сравните количество boilerplate&amp;rsquo;а у ванильного
+&lt;a href=&#34;https://redux.js.org/&#34;&gt;&lt;em&gt;Redux&lt;/em&gt;&lt;/a&gt;
+&amp;amp;
+&lt;a href=&#34;https://mobx.js.org/&#34;&gt;&lt;em&gt;MobX&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Плюсы:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Вроде как легче интегрироваться с экосистемой Vue2
+(за 3 версию не скажу, ибо щупал, но поверхностно)&lt;/li&gt;
+&lt;li&gt;Легче Jest&amp;rsquo;а, и имеет чуть более читабельный синтаксис
+(сугубо на вкус Автора)&lt;/li&gt;
+&lt;li&gt;На удивление шустрые ребята, которые могут сэкономить вам 2-3 секунды суровой
+кодерской жизни (&amp;ldquo;Плюсовики&amp;rdquo; дружно одобряют)&lt;/li&gt;
+&lt;li&gt;Также богатая экосистема позволяет превратить эту почти невинную парочку
+в адский комбайн, который будет тестировать всё, вся, и в первую очередь
+нервы вашего ПМ&amp;rsquo;а
+(
+когда его в 100500 раз вызовут на ковер с целью объяснить,
+нахрена вы потратили 2 спринта &amp;ldquo;на увеличение отказоустойчивости приложения&amp;rdquo;,
+если пришел очередной &amp;ldquo;chaotic-джун&amp;rdquo; и уронил production
+)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Минусы:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Angular? Не, не слышал *^-^*&lt;/li&gt;
+&lt;li&gt;Подробная, но чутка переусложненная дока может вогнать в ступор,
+а сразу после в неистовейшее ЖЕЛАНИЕ пойти поиграть с Jest&amp;rsquo;ом&lt;/li&gt;
+&lt;li&gt;При обвешивании плагинами, становятся тяжелее Jest&amp;rsquo;а&lt;/li&gt;
+&lt;li&gt;Mocha без Chai, что Нацу без Хэппи. Жить можно, но грустно.
+(Да и, как-бы, НАФИГА?!)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;cypresshttpsdocscypressioguidesoverviewwhy-cypresswhat-you-ll-learn&#34;&gt;&lt;a href=&#34;https://docs.cypress.io/guides/overview/why-cypress#What-you-ll-learn&#34;&gt;Cypress&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;&amp;ldquo;И вот, на 3 день!..&amp;rdquo;
+Ладно-ладно, интригу нагнал, теперь можно и пояснить.&lt;/p&gt;
+&lt;p&gt;Плюсы:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Одно слово: ДОКА. Почитай, ты все поймешь&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Клёвый, модный, молодежный&amp;rdquo; инструмент, который хочет привнести в этот серый и скучный
+мир QA немножко удобства и магии (&amp;ldquo;Плюсовики&amp;rdquo; дружно сделали страшную морду).&lt;/li&gt;
+&lt;li&gt;Почти безупречно подходит для большинства DEV QA сценариев
+(у матерых QA&amp;rsquo;щиков уже свой, потом и кровью выстраданный набор &amp;ldquo;костылей&amp;rdquo;),
+часто используется для &lt;code&gt;Component&lt;/code&gt;, &lt;code&gt;Интеграционного&lt;/code&gt; &amp;amp; &lt;code&gt;E2E&lt;/code&gt; тестирования.&lt;/li&gt;
+&lt;li&gt;Из коробки (с какой-то бородатой версии) дает тебе красивый и, что важнее,
+ТЫКАТЕЛЬНЫЙ UI, которым просто пользоваться.&lt;/li&gt;
+&lt;li&gt;Если ты (как и я) странный человек, который использует форки Chromium&amp;rsquo;а,
+то для таких &amp;ldquo;одаренных&amp;rdquo; тут также есть &lt;code&gt;Electron&lt;/code&gt;, для прогона тестов внутри него.
+У-Удобно&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Минусы:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Тяжелый, перед первым запуском, по сути, &lt;code&gt;требует установки отдельного Cypress приложения&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Тяжело вливается в &lt;em&gt;Unit&lt;/em&gt; тестирование (хотя может)&lt;/li&gt;
+&lt;li&gt;В зависимости от framework&amp;rsquo;а, при &lt;em&gt;Component&lt;/em&gt; тестироовании можно не раз (и нифига не два)
+стабильно стрелять себе в колено. Не из дробовика, но все же&lt;/li&gt;
+&lt;li&gt;Имеет свой, &amp;ldquo;Chai-подобный&amp;rdquo; синтаксис, что усложняет переезд на него (в случае необходимости)&lt;/li&gt;
+&lt;li&gt;jQuery! Напугал? Это хорошо, ибо бывают сценарии, когда он НУЖОН.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;интересная-штучка-но-есть-ли-у-неё-практическое-применение&#34;&gt;&amp;ldquo;Интересная штучка, но есть-ли у неё практическое применение?&amp;rdquo;&lt;/h2&gt;
+&lt;p&gt;Итак, мы бегло посмотрели на &amp;ldquo;главных игроков&amp;rdquo; QA-рынка
+(в моих бредовых фантазиях. Да-да, санитары уже выехали),
+но раз инструменты - есть, потребность - есть, то почему все эти
+&lt;a href=&#34;https://habr.com/ru/company/ruvds/blog/450316/&#34;&gt;TDD&lt;/a&gt;,
+&lt;a href=&#34;https://ru.wikipedia.org/wiki/BDD_(%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5)&#34;&gt;BDD&lt;/a&gt;
+и прочее еще не стали мейнстримом?&lt;/p&gt;
+&lt;p&gt;(Оффтоп: если стало - сорян, автор в танке и пошел выпить &lt;em&gt;йаду&lt;/em&gt;. Дальше лучше не читать)&lt;/p&gt;
+&lt;p&gt;По моему опыту, проблема всегда плюс-минус одна: &lt;strong&gt;ДОРОГО&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;почему-дорого&#34;&gt;Почему дорого?&lt;/h3&gt;
+&lt;p&gt;Потому что бизнес не очень любит кидаться в людей деньгами (ВНЕЗАПНО!),
+и для него &lt;strong&gt;оптимизация&lt;/strong&gt; - слово покруче, чем &lt;strong&gt;библия&lt;/strong&gt; для верующего.&lt;/p&gt;
+&lt;p&gt;(Мой агностик идет разбирацца, где это я таких слов понабрался)&lt;/p&gt;
+&lt;p&gt;Если вкратце, то на момент 2K22 разрабы - это дорого, а содержать
+команду разрабов - это вообще дофига дорого.
+Scrum, Agile, и вот эту вот всю &amp;ldquo;движуху&amp;rdquo; не от хорошей жизни придумали.&lt;/p&gt;
+&lt;p&gt;Так а все-таки, почему именно &lt;strong&gt;Дорого?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Потому что писать тесты - долго.
+Да, условный Cypress пытается решить эту проблему (в мире Frontend&amp;rsquo;a), но все равно -
+бизнес каждый раз оказывается перед выбором:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Сделать новую супер-пупер-свистящую фичу?&lt;/li&gt;
+&lt;li&gt;Покрыть приложени тестами?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Догадайтесь, что выбирают чаще.&lt;/p&gt;
+&lt;h2 id=&#34;но-ведь-на-дистанции-все-равно-ведь-дешевле-содержать-с-тестами-разве-нет&#34;&gt;Но ведь на дистанции все-равно ведь дешевле содержать с тестами, разве нет?&lt;/h2&gt;
+&lt;p&gt;Ответ - &lt;strong&gt;безусловно&lt;/strong&gt;, но:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Если эти тесты писал тот, кто УМЕЕТ ПИСАТЬ ТЕСТЫ.&lt;/li&gt;
+&lt;li&gt;Если у бизнеса есть на это ДЕНЬГИ&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;А теперь, давайте по пунктам:&lt;/p&gt;
+&lt;h3 id=&#34;что-значит-уметь-писать-тесты&#34;&gt;Что значит: уметь писать тесты?&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Тесты замедляют &amp;ldquo;ржавение&amp;rdquo; кода&lt;/li&gt;
+&lt;li&gt;Тесты тестируют то, что НАДО тестировать&lt;/li&gt;
+&lt;li&gt;Тесты частично снимают с условного Лида задачу по постоянному надзору за &amp;ldquo;chaotic-джунами&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Тесты (с некоторыми ограничениями) выполняют функцию Доки по проекту (для разрабов!)&lt;/li&gt;
+&lt;li&gt;Тесты с определенным процентом успеха не пускают кривой код в production (ВНЕЗАПНО №2)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;что-значит-у-бизнеса-есть-на-это-деньги&#34;&gt;Что значит: у бизнеса есть на это деньги?&lt;/h3&gt;
+&lt;p&gt;Вкратце - то самое и значит.
+&amp;ldquo;Кто платит, тот и музыку заказывает&amp;rdquo;, а если инвестор условного стартапа в душе не сечёт,
+что и зачем мы там вошкаем как dev-team, то ему с высокой колакольни начхать на всё это &amp;ldquo;ржавение кода на дистанции&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Для условного инвестора важно ЗАРАБОТАТЬ (ВНЕЗАПНОЕ №3)&lt;/p&gt;
+&lt;p&gt;Проблемы начинаются, когда условный стартап перестает быть просто &amp;ldquo;очередным стартапом&amp;rdquo;,
+и начинает плавно переходить в категорию &amp;ldquo;продуктовой компании&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Причина? Привычка.&lt;/p&gt;
+&lt;h2 id=&#34;привычка&#34;&gt;Привычка?&lt;/h2&gt;
+&lt;p&gt;Привычка.&lt;/p&gt;
+&lt;p&gt;Привычка просто имплементировать фичи, и закрывать 100500 тасок в секунду
+(и плевать, что отвалилась регистрация - починим в моменте, раньше же так делали? Делали. Значит, и сейчас сделаем)&lt;/p&gt;
+&lt;p&gt;Привычка тестировать продукт силами самой dev-team или product-team
+(в редких случаях - силами qa-team),
+ведь &amp;ldquo;вы же сами это написали, и вы говорите, что не можете предугадать, как поведет себя продукт?
+Я начинаю сомневаться в вашей компетентности&amp;rdquo; (и еще 1000 классных фраз от новоявленного CEO, CTO, whatever&amp;hellip;)&lt;/p&gt;
+&lt;h3 id=&#34;а-потом---суп-с-котом-0_o-&#34;&gt;А потом - суп с котом (0_o ?!)&lt;/h3&gt;
+&lt;p&gt;Ладно-ладно, хватит кидаться тапками.
+Торжественно клянусь, (&lt;em&gt;что замышляю только шалость&lt;/em&gt;)
+что ни одна животинка в ходе написания данного поста не пострадала.
+(Комары - не в счёт)&lt;/p&gt;
+&lt;p&gt;Суммарно, круг замкнулся. Приложение стало крутым? Стало.&lt;/p&gt;
+&lt;p&gt;Приложение разрослось? Разрослось.&lt;/p&gt;
+&lt;p&gt;Так а тесты-то где??? А их нету, потому что мы работаем на бизнес (пам-пам),
+а бизнесу нужно закрывать отчеты, нанимать персонал, и вот это вот все.&lt;/p&gt;
+&lt;h2 id=&#34;а-что-в-итоге&#34;&gt;А что в итоге?&lt;/h2&gt;
+&lt;p&gt;По итогу (и по опыту прошлых компаний), если не было абстрактного &amp;ldquo;единорога&amp;rdquo;,
+который бы жестко и бескомпромиссно топил за тесты, то возможны 2 пути:&lt;/p&gt;
+&lt;h3 id=&#34;андрюха-все-ня-давай-по-новой&#34;&gt;&amp;ldquo;Андрюха, все ***ня. Давай по-новой&amp;rdquo;&lt;/h3&gt;
+&lt;p&gt;Идея следующая: условного менеджера высшего звена (тут без сарказма: крутые ребята)
+настолько задолбало, что ему из каждого утюга звенят:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;это плохо работает&lt;/li&gt;
+&lt;li&gt;это сделать нельзя,&lt;/li&gt;
+&lt;li&gt;этот крутой разраб, для появления которого был призван сам Сатана, ушел и плакал кровавыми слезами,
+как только увидел код&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;(&lt;strong&gt;накидываем на вентилятор, накидываем, ну же, активнее&lt;/strong&gt;)&lt;/p&gt;
+&lt;p&gt;Что он принимает волевое решение: отложить какое-то количество денег на глобальную перепись кода.&lt;/p&gt;
+&lt;p&gt;Сразу скажу: мне повезло, и я когда-то попал именно на такой путь именно в такой компании,
+а потому четко себе представляю, что там &amp;ldquo;за поворотом&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Чаще всего, данный путь выбирают, когда бизнес больше не может расти, ибо обслужиание и поддержание
+кодовой базы продукта стоит дороже какого-то выставленного потолка.&lt;/p&gt;
+&lt;p&gt;Итог: пан или пропал.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ИЛИ Все круто, и мы могучим рывком все сделали красиво&lt;/li&gt;
+&lt;li&gt;ИЛИ Простите, п**дец. Переписывание затянулось, бизнес теряет все больше, а конкуренты счастливы.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;О развязке думайте сами.&lt;/p&gt;
+&lt;h3 id=&#34;мягкая-сила-в-действии&#34;&gt;&amp;ldquo;Мягкая сила&amp;rdquo; в действии&lt;/h3&gt;
+&lt;p&gt;Идея следующая: под мудрым надзором (&lt;em&gt;Гендальфа&lt;/em&gt;) крутого Лида/Лидов,
+начинаются точечные, но конкретные улучшения кода.&lt;/p&gt;
+&lt;p&gt;Что-то чистится, что-то выкидывается, что-то просто стабилизируется. Это нормально,
+но сразу ремарка - найти лидов, которые могут это стабильно выносить и доносить до
+бизнеса ценность - квест похлеще &amp;ldquo;я найду Цири и верну ее домой&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Обычно, это встраивается в процессы организации, и таким нехитрым финтом
+еще сильнее замедляется &amp;ldquo;ржавение кода&amp;rdquo;. Когда-то он все-равно произойдет,
+но сейчас - мы тут ржавчину убрали, тут подкрасили, тут костылик подставили - круто,
+теперь можно и фичу добавить.&lt;/p&gt;
+&lt;p&gt;Итог: эволюция/энволюция (тут как повезет).
+Из практики, чаще всего начинают именно этот путь, но вот стабильно ему следуют - единицы.&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>Кто такой &#39;pseudo::Blogger&#39;?</title>
+      <link>https://oneeyed1366.github.io/blog/about/me/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://oneeyed1366.github.io/blog/about/me/</guid>
+      <description>Как личность? Я &amp;ldquo;гикнутый&amp;rdquo; на всю голову фанат собак, книжек и технологий, а также воспитатель чудесного лабрадора и 2 котов с 9-ти летним стажем.
+Люблю языки, в частности Итальянский. В свободное время стараюсь не забывать Английский, а также потихоньку изучать Китайский.
+Занимался музыкой, в своё время неплохо так прокачал скилл пианиста. Пытался в скрипку, но увы - вообще не мое. Зато пошла гитара.
+Как работяга? Я Формошлёп 50 уровня, работаю на TS, React\Vue и в качестве хобби потихоньку изучаю кросс-платформенную разработку на React Native/Dart - Flutter.</description>
+      <content>&lt;h2 id=&#34;как-личность&#34;&gt;Как личность?&lt;/h2&gt;
+&lt;p&gt;Я &amp;ldquo;гикнутый&amp;rdquo; на всю голову фанат собак, книжек и технологий, а также
+воспитатель чудесного лабрадора и 2 котов с 9-ти летним стажем.&lt;/p&gt;
+&lt;p&gt;Люблю языки, в частности &lt;code&gt;Итальянский&lt;/code&gt;. В свободное время
+стараюсь не забывать &lt;code&gt;Английский&lt;/code&gt;, а также потихоньку изучать &lt;code&gt;Китайский&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Занимался музыкой, в своё время неплохо так прокачал скилл &lt;code&gt;пианиста&lt;/code&gt;. Пытался
+в &lt;code&gt;скрипку&lt;/code&gt;, но увы - вообще не мое. Зато пошла &lt;code&gt;гитара&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;как-работяга&#34;&gt;Как работяга?&lt;/h2&gt;
+&lt;p&gt;Я &lt;code&gt;Формошлёп 50 уровня&lt;/code&gt;, работаю на &lt;code&gt;TS, React\Vue&lt;/code&gt; и в качестве хобби
+потихоньку изучаю кросс-платформенную разработку на &lt;code&gt;React Native&lt;/code&gt;/&lt;code&gt;Dart - Flutter&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Начинал как &lt;code&gt;Backend&#39;ер&lt;/code&gt; на &lt;code&gt;Python, Django&lt;/code&gt;, но потом, что называется, &amp;ldquo;перемкнуло&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Работаю преимущественно как &lt;code&gt;Аутсорсер&lt;/code&gt;, но начинал в такой древней штуке как
+&lt;code&gt;Web Студия&lt;/code&gt;
+(в те бородатые времена, когда помимо кодерства надо было и на &amp;ldquo;нормальной&amp;rdquo; работе работать)&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>Что за &#39;pseudo::Blog&#39; вообще?</title>
+      <link>https://oneeyed1366.github.io/blog/about/blog/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://oneeyed1366.github.io/blog/about/blog/</guid>
+      <description>Что? По сути, данный блог - это просто &amp;ldquo;сборная солянка&amp;rdquo; впечатлений и опыта 1 человека, который он ведет больше даже для себя, чем для остальных
+(Эгоизм 80 уровня &amp;ndash; ACTIVATED)
+Чтобы что? Цель данного блога - сохранить знания и мысли, которые покажутся мне важными.
+У данного блога НЕТ ЦЕЛЕЙ &amp;ldquo;убить дракона&amp;rdquo; (кидает камень в Reddit), &amp;ldquo;спасти принцессу&amp;rdquo; (Аудитория - привет!) или &amp;ldquo;жить долго и счастливо&amp;rdquo; (ибо скучно, и как в известном меме: I don&amp;rsquo;t wanna peace.</description>
+      <content>&lt;h2 id=&#34;что&#34;&gt;Что?&lt;/h2&gt;
+&lt;p&gt;По сути, данный блог - это просто &amp;ldquo;сборная солянка&amp;rdquo; впечатлений и опыта
+1 человека, который он ведет больше даже для себя, чем для остальных&lt;/p&gt;
+&lt;p&gt;(Эгоизм 80 уровня &amp;ndash; ACTIVATED)&lt;/p&gt;
+&lt;h2 id=&#34;чтобы-что&#34;&gt;Чтобы что?&lt;/h2&gt;
+&lt;p&gt;Цель данного блога - сохранить знания и мысли, которые покажутся мне важными.&lt;/p&gt;
+&lt;p&gt;У данного блога &lt;strong&gt;НЕТ ЦЕЛЕЙ&lt;/strong&gt; &amp;ldquo;убить дракона&amp;rdquo; (кидает камень в Reddit),
+&amp;ldquo;спасти принцессу&amp;rdquo; (Аудитория - привет!) или &amp;ldquo;жить долго и счастливо&amp;rdquo;
+(ибо скучно, и как в известном меме: I don&amp;rsquo;t wanna peace. I WANT PROBLEMS, ALWAYS!)&lt;/p&gt;
+&lt;h2 id=&#34;как-я-к-этому-пришел&#34;&gt;Как я к этому пришел?&lt;/h2&gt;
+&lt;p&gt;На самом деле, мне часто говорили во время работы, что я интересно пишу.&lt;/p&gt;
+&lt;p&gt;В смысле, большинство &amp;ldquo;скучных&amp;rdquo;, &amp;ldquo;технических&amp;rdquo; и около-кодерских тем я, со слов других,
+с определенным процентом успеха писал так,
+что понятно и интересно читать было как
+тестировщикам\менеджерам\подставь-сюда-шото-как-бы-умное-плиз,
+так и самим кодерам.&lt;/p&gt;
+&lt;p&gt;Поэтому, периодически у меня &amp;ldquo;простреливала&amp;rdquo; в моем ушатанном в ноль мозгу мысль:&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;А может как-бы какой-то бы типа бложек завести? Ну там, картиночки, постики, вся фигня???&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;Так я и докатился до такой жизни. Утром - треню, днем - работаю,
+вечером - притворяюсь хорошим человеком и добрым другом четвероногих
+(спойлер: получается фигово), а перед сном &amp;ldquo;ваяю свои произведения&amp;rdquo;.&lt;/p&gt;
+&lt;h2 id=&#34;что-хочу-в-итоге-получить&#34;&gt;Что хочу в итоге получить?&lt;/h2&gt;
+&lt;p&gt;Тони Старка и Черную Вдову на ДР. Я не шучу. ;)&lt;/p&gt;
+&lt;p&gt;А если серьезно - просто писать, и чтобы создаваемые здесь посты были
+в той или иной степени полезны другим людям.&lt;/p&gt;
+&lt;p&gt;Неважно: &amp;ldquo;ВАйТишник&amp;rdquo; вы, Senior с 100+ годами опыта во всех языках мира - по**ю вообще.&lt;/p&gt;
+&lt;p&gt;Если для вас будет забавно в какой-то момент времени почитать излагаемый тут материал
+или (не дай Бог!) вы сочтетё его полезным - тогда круто, плюсик мне в карму.&lt;/p&gt;
+</content>
+    </item>
+    
+  </channel>
+</rss>
