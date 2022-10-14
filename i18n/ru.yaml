@@ -28,3 +28,6 @@
 
 - id: config-menu-tags
   translation: Список тегов
+
+- id: config-menu-contact
+  translation: "Контакты"

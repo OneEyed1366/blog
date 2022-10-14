@@ -20,3 +20,6 @@
 
 - id: config-menu-tags
   translation: Tags
+
+- id: config-menu-contact
+  translation: Contact
