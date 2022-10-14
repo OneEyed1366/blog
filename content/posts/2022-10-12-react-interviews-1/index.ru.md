@@ -1,13 +1,13 @@
 +++
 date = "2022-10-12T14:45:00+03:00"
 title = "Въетнамские флэшбэки: Девичья память у React'а (и немножко DotNotation)"
-description = "Немного рассуждений насчет особенностей разработки на React'е (самоирония прилагается)"
+description = "Немного рассуждений насчет особенностей разработки на React'е (шутейки прилагаются)"
 tags = ["study", "JavaScript", "react", "async", "web",]
 keywords = ["react", "reactjs", "dot-notation", "memo", "async"]
 showFullContent = false
 readingTime = true 
 hideComments = true 
-draft = true 
+draft = false 
 +++
 
 ---
@@ -95,7 +95,6 @@ _Бизнес уходит, просыпается "мафиозный" dev-team
 
 ```ts
 // types/table.d.ts
-import { HTMLAttributes } from "react";
 
 declare namespace NDataTable {
   interface IDataTable {
@@ -111,6 +110,7 @@ export as namespace AppTypes;
 
 ```ts
 // TableComponent/index.d.ts
+import { HTMLAttributes } from "react";
 
 export interface IProps extends Partial<HTMLAttributes<HTMLDivElement>> {
   header: string;
@@ -176,9 +176,10 @@ export default TableComponent;
 // HomePage/index.tsx
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 
+const rows = new Array(500).fill("Hello, Data Table World!");
 const _mockDataTable: AppTypes.IDataTable[] = new Array(5).fill({
   column: "Some column header",
-  rows: new Array(500).fill("Hello, Data Table World!")
+  rows
 });
 
 export function HomePage(): JSX.Element {
