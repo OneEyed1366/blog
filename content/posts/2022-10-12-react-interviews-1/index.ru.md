@@ -109,7 +109,7 @@ export as namespace AppTypes;
 ```
 
 ```ts
-// TableComponent/index.d.ts
+// TableComponent/types.d.ts
 import { HTMLAttributes } from "react";
 
 export interface IProps extends Partial<HTMLAttributes<HTMLDivElement>> {
@@ -121,7 +121,7 @@ export interface IProps extends Partial<HTMLAttributes<HTMLDivElement>> {
 ```tsx
 // TableComponent/index.tsx
 import { memo, async } from "react";
-import { IProps } from ".";
+import type { IProps } from "./types";
 
 export function TableComponent({
   header,
