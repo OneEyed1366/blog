@@ -120,7 +120,7 @@ export interface IProps extends Partial<HTMLAttributes<HTMLDivElement>> {
 
 ```tsx
 // TableComponent/index.tsx
-import { memo, async } from "react";
+import { memo, lazy } from "react";
 import type { IProps } from "./types";
 
 export function TableComponent({
@@ -165,8 +165,8 @@ export function TableComponent({
 
 TableComponent.Variants = {
   Memoized: memo(TableComponent),
-  Async: async(() => import(".")),
-  AsyncMemoized: memo(async(() => import(".")))
+  Async: lazy(() => import(".")),
+  AsyncMemoized: memo(lazy(() => import(".")))
 };
 
 export default TableComponent;
@@ -246,8 +246,8 @@ export function HomePage(): JSX.Element {
 ```tsx
 TableComponent.Variants = {
   Memoized: memo(TableComponent),
-  Async: async(() => import(".")),
-  AsyncMemoized: memo(async(() => import(".")))
+  Async: lazy(() => import(".")),
+  AsyncMemoized: memo(lazy(() => import(".")))
 };
 ```
 
